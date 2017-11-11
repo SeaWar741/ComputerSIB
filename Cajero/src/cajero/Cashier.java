@@ -125,10 +125,14 @@ public class Cashier {
             System.out.println();
             System.out.printf("> $");
             FUNDATION = keyboard.nextInt(); //the promt is printed and the amount is requested
-            if()
-            FUNDATIONM = FUNDATIONM + FUNDATION; //the fundation money plus the amount to be donated
-            BALANCE = BALANCE - FUNDATION; //the user balance minus the fundation money
-            System.out.println("Thank you for donating!");
+            if(FUNDATION <= BALANCE){//if the amount to donate is minor to the balance you can donate
+                FUNDATIONM = FUNDATIONM + FUNDATION; //the fundation money plus the amount to be donated
+                BALANCE = BALANCE - FUNDATION; //the user balance minus the fundation money
+                System.out.println("Thank you for donating!");
+            }
+            else {
+                System.out.println("Insufficient Balance");
+            }
         }
         else if(STR.equals("n")){ //if n then prints blank
             System.out.println();
@@ -145,9 +149,13 @@ public class Cashier {
             System.out.println();
             System.out.printf("> $"); 
             TRANSB = keyboard.nextInt(); //the promt is printed in the same line as the request for the amount of money
-            TRANSB = TRANSB + BALANCETRANSFER; //the account to be transfered balance plus the amount that is being transfered
-            BALANCE = BALANCE - BALANCETRANSFER; //the user balance minus the amount that is being transfered
-            System.out.println(BALANCE);
+            if(TRANSB <= BALANCE){ //if the money to transfer is minor or equal then the operation can continue
+                TRANSB = TRANSB + BALANCETRANSFER; //the account to be transfered balance plus the amount that is being transfered
+                BALANCE = BALANCE - BALANCETRANSFER; //the user balance minus the amount that is being transfered
+            }
+            else{ //if there is not enough money to transfer then insufficient balance
+                System.out.println("Insufficient Balance");
+            }
         }
         else{//if the account inst valid an error message is displayed
             System.out.println("Not a valid account");

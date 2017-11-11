@@ -50,14 +50,14 @@ public class Program {
                         Cashier.fundation();
                         Cashier.deposit();
                         break;
-                    case 2:
+                    case 2: //case for transfering money
                         System.out.println();                      
                         if(BALANCEDEPOSIT <= BALANCE){
-                        Cashier.fundation();     
-                        Cashier.transfer();                            
+                            Cashier.fundation();     
+                            Cashier.transfer();                            
                         }
                         else{
-                            System.out.println("Insufficient Balance");
+                            System.out.println("Insufficient Balance"); //not enough money
                         }
                         break;
                     case 3:
@@ -66,22 +66,22 @@ public class Program {
                 }
             }
             else{
-                System.out.println("ERROR");
+                System.out.println("ERROR"); //display error in case the account isnt valid
                 System.out.println();
             }
-            if(CLIENT.length() == 16 && PASSWORD.length() == 4){
-            System.out.println();
-            System.out.println("Would you like to perform another task?");
-            System.out.println();
-            System.out.println("Enter 0 to continue or 1 to close the session");
-            System.out.println();
-            System.out.printf(">");
-            X = keyboard.nextInt();
+            if(CLIENT.length() == 16 && PASSWORD.length() == 4){ //if the account and password are valid then another task can be performed
+                System.out.println();
+                System.out.println("Would you like to perform another task?");
+                System.out.println();
+                System.out.println("Enter 0 to continue or 1 to close the session");
+                System.out.println();
+                System.out.printf(">");
+                X = keyboard.nextInt(); //its requested to modify the value of x 
             }
             else{
-                X = 1;
+                X = 1; //if the values arent correct then the program changes the value of x to 1 to terminate the program
             }
         }
-        Cashier.close();
+        Cashier.close(); //close & terminate the cashier with close function
      }
 }
