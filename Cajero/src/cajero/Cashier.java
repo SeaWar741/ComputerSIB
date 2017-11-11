@@ -162,7 +162,7 @@ public class Cashier {
         }
     }
     
-    public static void close(){ //functino for closing the cashier
+    public static void close(){ //function for closing the cashier
         System.out.println("Thank you for choosing our Bank");
         System.out.println();
         System.out.println("Farewell user " +CLIENT); //farewell for the client
