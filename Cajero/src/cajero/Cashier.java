@@ -18,7 +18,7 @@ public class Cashier {
         public static int BALANCERETRIEVE = 0; //Balance that is going to be retrieved
         public static int BALANCEDEPOSIT = 0; //Balance that is going to be deposit
         public static int BALANCETRANSFER = 0; //Balance that is going to be transfered
-	public static String TRY = "Try again"; //String for errors
+	public static String TRY = "INCORRECT"; //String for errors
         public static int FIRST; //variable for the first operation
         public static int SECOND = 0; //variable for the second operation
         public static String IDTRANS; //Account number where the money will be transfered
@@ -29,6 +29,7 @@ public class Cashier {
 	public static int FUNDATIONM = 0; //Fundation account balance
         
     public static void questions(){ //function for questions
+        int TIMES = 0; //variable for the number of trying inputs for password
         Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
         String PROMT; 
         PROMT = ">"; //promt sring definition
@@ -39,19 +40,68 @@ public class Cashier {
         CLIENT = keyboard.nextLine(); //to be defined by user
         System.out.println();
         if(CLIENT.length() == 16){ //if the lenght of the input(account id) is equal to 16 then the account is valid
-            System.out.println("Insert NIP");
-            System.out.printf(PROMT); //the NIP is asked then the promt is printed in the same line as the Password request
-            PASSWORD = keyboard.nextLine(); 
-            System.out.println();
-            if(PASSWORD.length() == 4){ //if the NIP/Password lenght is equal to 4 then you will be welcomed
-                System.out.println("Welcome to your account user " +CLIENT);
+            if(TIMES <4){
+                System.out.println("Insert NIP");
+                System.out.printf(PROMT); //the NIP is asked then the promt is printed in the same line as the Password request
+                PASSWORD = keyboard.nextLine(); 
+                System.out.println();
+                if(PASSWORD.length() == 4){ //if the NIP/Password lenght is equal to 4 then you will be welcomed
+                    System.out.println("Welcome to your account user " +CLIENT);
+                }
+                else{ //if not then try string will be printed
+                    System.out.println(TRY);
+                }    
             }
-            else{ //if not then try string will be printed
-                System.out.println(TRY);
-            }    
+            else{
+                System.out.println("THE CASHIER HAS BEEN BLOCKED DUE TO THE " +TIMES+ " YOU HAVE ATTEMPTED TO ACCESS, PLEASE CONTACT AN ADMINISTRATOR");
+            }
         }
         else{ //if not then try string will be printed
             System.out.println(TRY);
+        }
+    }
+    
+    public static void login(){
+        int TIMESC = 0;
+        int TIMESP = 0;
+        String PROMT; 
+        Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
+        PROMT = ">"; //promt sring definition
+        System.out.println("Welcome to LJD Bank");
+        System.out.println("Insert Bank account");
+        System.out.println();
+        System.out.printf(PROMT);
+        CLIENT = keyboard.nextLine(); //to be defined by user
+        if(CLIENT.length() != 16){
+            if(TIMESC == 0){
+                while(TIMESC < 4){
+                   System.out.println("Not a valid Account");
+                   System.out.println("Please insert a valid Account");
+                   CLIENT = keyboard.nextLine();
+                   TIMESC ++;
+                }
+                Cashier.close();
+            }    
+        }
+        else{
+            System.out.println("Insert NIP");
+            System.out.printf(PROMT);
+            PASSWORD = keyboard.nextLine();
+            if(PASSWORD.length() != 4){ 
+                while(TIMESP < 4){
+                        System.out.println("Not a valid NIP");
+                        System.out.println("Please insert a valid NIP");
+                        PASSWORD = keyboard.nextLine();
+                        TIMESP ++;
+                }
+                Cashier.close();
+            }
+        }
+        
+        PASSWORD =keyboard.nextLine();
+        if(PASSWORD.length() < 4){
+            PASSWORD = keyboard.nextLine();
+            TIMESP ++;
         }
     }
     
@@ -166,5 +216,6 @@ public class Cashier {
         System.out.println("Thank you for choosing our Bank");
         System.out.println();
         System.out.println("Farewell user " +CLIENT); //farewell for the client
+        System.exit(0);
     }
 }

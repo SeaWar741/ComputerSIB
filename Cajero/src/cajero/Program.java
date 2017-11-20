@@ -28,10 +28,10 @@ public class Program {
         Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
         int X;
         X = 0;
-        Cashier.questions(); //the object cashier runs question function
+        //Cashier.questions(); //the object cashier runs question function
+        Cashier.login();
         System.out.println();
-        while(X == 0){ //while the variable x is equal to 0 then 
-            if(CLIENT.length() == 16 && PASSWORD.length() == 4){ //lenght
+        while(X == 0){ //while the variable x is equal to 0 then
                 System.out.println();
                 Cashier.options(); //the object cashier runs options function
                 switch(FIRST){ //switch for the first operation
@@ -64,11 +64,6 @@ public class Program {
                         System.out.println();
                         break;
                 }
-            }
-            else{
-                System.out.println("ERROR"); //display error in case the account isnt valid
-                System.out.println();
-            }
             if(CLIENT.length() == 16 && PASSWORD.length() == 4){ //if the account and password are valid then another task can be performed
                 System.out.println();
                 System.out.println("Would you like to perform another task?");
@@ -81,7 +76,7 @@ public class Program {
             else{
                 X = 1; //if the values arent correct then the program changes the value of x to 1 to terminate the program
             }
-        }
+        }//end while
         Cashier.close(); //close & terminate the cashier with close function
      }
 }
