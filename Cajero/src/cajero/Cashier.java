@@ -109,8 +109,10 @@ public class Cashier {
                     System.out.println();
                     System.out.printf("> $");
                     BALANCETRANSFER = keyboard.nextInt(); //the amount to transfer is requested
-                    BALANCE = BALANCE - BALANCETRANSFER;
-                    TRANSB = TRANSB + BALANCETRANSFER;
+                    if(BALANCETRANSFER < BALANCE){//if the money to transfer is minor to the balance of the user then the balance equals the balance minus the balancetransfer
+                        BALANCE = BALANCE - BALANCETRANSFER;
+                        TRANSB = TRANSB + BALANCETRANSFER; //the balance of the account which is being transfered equals the Blance of the acount plus the balance that is being transfered
+                    }
                 }
                 break;
             case 3: //case for transfering money, the amount of money to transfer is requested

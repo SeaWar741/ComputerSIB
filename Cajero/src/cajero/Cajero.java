@@ -17,7 +17,7 @@ public class Cajero {
     public static void main(String[] args) throws InterruptedException { //this allows looop inside the code
         int X;
         X = 0;
-        System.out.println("INICIALIZANDO CAJERO");
+        System.out.println("INITIALIZING CASHIER");
         while(X!= 12){ //animation where x value changes every time, sleeping therefore an animation happens by printing in the same line -=
             System.out.printf("-");
             Thread.sleep(250); //the system waits for 250 ms
