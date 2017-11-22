@@ -21,87 +21,52 @@ public class Cashier {
 	public static String TRY = "INCORRECT"; //String for errors
         public static int FIRST; //variable for the first operation
         public static int SECOND = 0; //variable for the second operation
-        public static String IDTRANS; //Account number where the money will be transfered
 	public static int TRANSB = 0; //Account Balance for the Transfered
 	public static String CLIENT; //Client/user ID
 	public static String PASSWORD; //Client/user ID
+        public static String ACCOUNT; //Account number where the money will be transfered
         public static int FUNDATION = 0; //Fundation transaction
 	public static int FUNDATIONM = 0; //Fundation account balance
-        
-    public static void questions(){ //function for questions
-        int TIMES = 0; //variable for the number of trying inputs for password
-        Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
-        String PROMT; 
-        PROMT = ">"; //promt sring definition
-        System.out.println("Welcome to LJD Bank");
-        System.out.println("Insert Bank account");
-        System.out.println();
-        System.out.printf(PROMT);
-        CLIENT = keyboard.nextLine(); //to be defined by user
-        System.out.println();
-        if(CLIENT.length() == 16){ //if the lenght of the input(account id) is equal to 16 then the account is valid
-            if(TIMES <4){
-                System.out.println("Insert NIP");
-                System.out.printf(PROMT); //the NIP is asked then the promt is printed in the same line as the Password request
-                PASSWORD = keyboard.nextLine(); 
-                System.out.println();
-                if(PASSWORD.length() == 4){ //if the NIP/Password lenght is equal to 4 then you will be welcomed
-                    System.out.println("Welcome to your account user " +CLIENT);
-                }
-                else{ //if not then try string will be printed
-                    System.out.println(TRY);
-                }    
-            }
-            else{
-                System.out.println("THE CASHIER HAS BEEN BLOCKED DUE TO THE " +TIMES+ " YOU HAVE ATTEMPTED TO ACCESS, PLEASE CONTACT AN ADMINISTRATOR");
-            }
-        }
-        else{ //if not then try string will be printed
-            System.out.println(TRY);
-        }
-    }
-    
-    public static void login(){
-        int TIMESC = 0;
-        int TIMESP = 0;
-        String PROMT; 
-        Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
-        PROMT = ">"; //promt sring definition
-        System.out.println("Welcome to LJD Bank");
-        System.out.println("Insert Bank account");
-        System.out.println();
-        System.out.printf(PROMT);
-        CLIENT = keyboard.nextLine(); //to be defined by user
-        if(CLIENT.length() != 16){
-            if(TIMESC == 0){
-                while(TIMESC < 4){
-                   System.out.println("Not a valid Account");
-                   System.out.println("Please insert a valid Account");
-                   CLIENT = keyboard.nextLine();
-                   TIMESC ++;
-                }
-                Cashier.close();
-            }    
-        }
-        else{
-            System.out.println("Insert NIP");
+        public static int RETRY_CLIENT = 0;
+        public static int RETRY_NIP = 0;
+
+    public static void questions(){
+        Scanner keyboard = new Scanner(System.in);//Scanner is initialized
+        String PROMT = ">";
+        System.out.println("Welcome to BADAMEX");
+        while(RETRY_CLIENT<4){
+            System.out.println("Insert Bank account");
+            System.out.println();
             System.out.printf(PROMT);
-            PASSWORD = keyboard.nextLine();
-            if(PASSWORD.length() != 4){ 
-                while(TIMESP < 4){
-                        System.out.println("Not a valid NIP");
-                        System.out.println("Please insert a valid NIP");
-                        PASSWORD = keyboard.nextLine();
-                        TIMESP ++;
+            CLIENT = keyboard.nextLine(); //to be defined by user
+            System.out.println();
+            if(CLIENT.length() == 16){ //lenght
+                RETRY_CLIENT = 5;//this variable is set to 5 breaking the loop when the client is valid
+                while(RETRY_NIP < 4){//while the RETRYNIP is less than four then the nip is requested
+                    System.out.println("Insert NIP");
+                    System.out.printf(PROMT);
+                    PASSWORD = keyboard.nextLine();//NIP is requested
+                    System.out.println();
+                    if(PASSWORD.length() == 4){ //if nip length is equal to 4
+                        System.out.println("Welcome to your account user " +CLIENT); //gives welcome
+                        RETRY_NIP = 5; //entonces se pone como 5 rompiendo el loop
+                    }
+                    else if(PASSWORD.length() != 4 && RETRY_NIP == 4){ //if the password length is diferent from 4 and retryNIP is equal to 4 attempts
+                        Cashier.close(); //Cashier closes
+                    }
+                    else if(PASSWORD.length() != 4){// if the NIP Lenght is diferent from 4 then the NIP is requested again, RETRYNIP increases in 1
+                        System.out.println(TRY);
+                        RETRY_NIP ++; //RetryNIP is increased in one (+1)
+                    }
                 }
-                Cashier.close();
             }
-        }
-        
-        PASSWORD =keyboard.nextLine();
-        if(PASSWORD.length() < 4){
-            PASSWORD = keyboard.nextLine();
-            TIMESP ++;
+            else if(CLIENT.length() != 16 && RETRY_CLIENT == 4){ //IF the lenght of the user is diferent from 16 and the Retry Client equals then the cashier closes
+                Cashier.close();
+            } 
+            else if(CLIENT.length() != 16){//if the clientlenght is diferent from 16 then the retry client increases in one (+1)
+                System.out.println(TRY);
+                RETRY_CLIENT ++;
+            } 
         }
     }
     
@@ -129,13 +94,24 @@ public class Cashier {
                 System.out.println("Please insert the amout of money to deposit");
                 System.out.println();
                 System.out.printf("> $");
-                BALANCETRANSFER = keyboard.nextInt();
+                BALANCEDEPOSIT = keyboard.nextInt();
                 break;
             case 2: //case for transfering money, the amount of money to transfer is requested
-                System.out.println("Insert the account number to make the transfer");
+                System.out.println();
+                System.out.println("Insert the account to transfer");
                 System.out.println();
                 System.out.printf(">");
-                IDTRANS = keyboard.nextLine();
+                keyboard.nextLine();
+                ACCOUNT = keyboard.nextLine(); //the account is requested
+                if(ACCOUNT.length() == 16){//if the lenght of the account is eqiual to 16 then the amount to be transfered is requested
+                    System.out.println();
+                    System.out.println("Insert the amount to transfer");
+                    System.out.println();
+                    System.out.printf("> $");
+                    BALANCETRANSFER = keyboard.nextInt(); //the amount to transfer is requested
+                    BALANCE = BALANCE - BALANCETRANSFER;
+                    TRANSB = TRANSB + BALANCETRANSFER;
+                }
                 break;
             case 3: //case for transfering money, the amount of money to transfer is requested
                 System.out.println("Chekcing your account Balance");
@@ -152,6 +128,7 @@ public class Cashier {
                 break;
         }
     }
+    
     public static void extract_money(){ //function for money extraction
         TOTALCMONEY = TOTALCMONEY - BALANCERETRIEVE; //the total cashier money equals the total cashier money minus the retrieve request
         BALANCE = BALANCE - BALANCERETRIEVE; //the user balance equals the account minus the retrieve request
@@ -191,31 +168,16 @@ public class Cashier {
         System.out.println();
         System.out.println("Done");
     }
-    public static void transfer(){ //function for transfering money
-        Scanner keyboard = new Scanner(System.in); //Keyboard input initializer
-        if(IDTRANS.length() == 16){ //if the account to be transfered lenght is equal to 16 digits then
-            System.out.println();
-            System.out.println("Insert the amount to transfer"); //the amount to transfered is requested
-            System.out.println();
-            System.out.printf("> $"); 
-            TRANSB = keyboard.nextInt(); //the promt is printed in the same line as the request for the amount of money
-            if(TRANSB <= BALANCE){ //if the money to transfer is minor or equal then the operation can continue
-                TRANSB = TRANSB + BALANCETRANSFER; //the account to be transfered balance plus the amount that is being transfered
-                BALANCE = BALANCE - BALANCETRANSFER; //the user balance minus the amount that is being transfered
-            }
-            else{ //if there is not enough money to transfer then insufficient balance
-                System.out.println("Insufficient Balance");
-            }
-        }
-        else{//if the account inst valid an error message is displayed
-            System.out.println("Not a valid account");
-        }
-    }
     
     public static void close(){ //function for closing the cashier
         System.out.println("Thank you for choosing our Bank");
         System.out.println();
-        System.out.println("Farewell user " +CLIENT); //farewell for the client
-        System.exit(0);
+        if(CLIENT.length() == 16 && PASSWORD.length() == 4){ //if the user lenght is equal to 16 and password lenght to 4 (if they are valid) then the user closes by saying the account number
+            System.out.println("Farewell user " +CLIENT); //farewell for the client
+        }
+        else{ //if the account or password isnt valid then the following is displayed
+            System.out.println("PLEASE CONTACT THE BANK FOR ASSISTANCE IF NEEDED");
+        }
+        System.exit(0); //the system forces the exit of the program
     }
 }
