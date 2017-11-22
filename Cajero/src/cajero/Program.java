@@ -45,6 +45,9 @@ public class Program {
                                 Cashier.fundation();
                                 Cashier.extract_money();
                             }
+                            else if(BALANCERETRIEVE > TOTALCMONEY){ //if the money to extract is superior to the money that the cashier has then it will ask the user to ask with the staff
+                                System.out.println("Insufficient Cashier Balance, Please contact a bank administrator");
+                            }
                             else{ //if the conditions fail then insufficient balance
                                 System.out.println("Insufficient Balance");
                             }

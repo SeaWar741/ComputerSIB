@@ -27,6 +27,16 @@ public class Cajero {
         }
         System.out.println();
         System.out.println();
+        System.out.println("______________________________________________________________________________");
+        System.out.println("########     ###    ##    ## ########     ###    ##     ## ######## ##     ## ");
+        System.out.println("##     ##   ## ##   ###   ## ##     ##   ## ##   ###   ### ##        ##   ##  ");
+        System.out.println("##     ##  ##   ##  ####  ## ##     ##  ##   ##  #### #### ##         ## ##   ");
+        System.out.println("########  ##     ## ## ## ## ##     ## ##     ## ## ### ## ######      ###    ");
+        System.out.println("##     ## ######### ##  #### ##     ## ######### ##     ## ##         ## ##  ");
+        System.out.println("##     ## ##     ## ##   ### ##     ## ##     ## ##     ## ##        ##   ## ");
+        System.out.println("########  ##     ## ##    ## ########  ##     ## ##     ## ######## ##     ## ");
+        System.out.println("______________________________________________________________________________");
+        System.out.println();
         Program = new Program(); //object program is initialized
         Program.run(); //Program uses run function
     }
