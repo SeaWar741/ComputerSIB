@@ -17,7 +17,7 @@ public class Loops {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int f,c;
+        //int f,c;
         String black="\033[30m"; 
         String red="\033[31m"; 
         String green="\033[32m"; 
@@ -41,15 +41,31 @@ public class Loops {
             A++;
         }while(A<=T);
         */
-        Scanner teclado = new Scanner(System.in);
+        /*Scanner teclado = new Scanner(System.in);
         System.out.println(purple+"Texto de Color !!!!!"+reset);
         int t = teclado.nextInt();
         System.out.print("");
         for (c=1;c<=t; c++){
-            for(f=1;f<=t;f++){
                 System.out.print("* ");
             }
                 System.out.println("");
+        */
+        int c,f,t;
+        //c = columna
+        //f = fila
+        Scanner teclado = new Scanner(System.in);
+        System.out.println(red+"Cuantas veces quieres repetir el circulo?");
+        t = teclado.nextInt();
+        
+        for(c=1;c<=t;c++){
+            //for(f=1;f<=t; f++){ //imprimir matriz
+            for(f=1;f<=c;f++){ //imrpimir f igualando a c
+                System.out.print(c+" * "+f);
             }
-    }
+            System.out.println("");
+        }
+        //invertirlo para que salga la piramide al reves con espacio
+        
+        
+        }
 }
