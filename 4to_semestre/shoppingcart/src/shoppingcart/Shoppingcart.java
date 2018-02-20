@@ -8,11 +8,13 @@ package shoppingcart;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Shoppingcart {
     
@@ -31,7 +33,7 @@ public class Shoppingcart {
       
       /**/
       /*database for products*/
-      HashMap<Integer, String[]> products = new HashMap<>();
+      /*HashMap<Integer, String[]> products = new HashMap<>();
       products.put(0,new String[]{"shampoo","limpieza","50","10","5"});
       products.put(1,new String[]{"deshodorante","limpieza","50","10","5"});
       products.put(2,new String[]{"pasta dental","limpieza","50","10","5"});
@@ -41,9 +43,7 @@ public class Shoppingcart {
       products.put(6,new String[]{"refesco","comida","50","10","5"});
       products.put(7,new String[]{"sabritones","comida","50","10","5"});
       products.put(8,new String[]{"chicles clorent","comida","50","10","5"});
-      products.put(9,new String[]{"gummy","comida","50","10","5"});
-      /**/
-      /*productos al array*/
+      products.put(9,new String[]{"gummy","comida","50","10","5"});*/
       String[] sorted = {""};
       String[][] elements = { {"0","shampoo","limpieza","50","10","5"}, 
           {"1","deshodorante","limpieza","50","10","5"},{"2","pasta dental","limpieza","50","10","5"},
@@ -52,8 +52,8 @@ public class Shoppingcart {
           {"7","sabritones","comida","50","10","5"},{"8","chicles clorent","comida","50","10","5"},
           {"9","gummy","comida","50","10","5"}
       };
-      int size = elements.length;
-        System.out.println(size);
+      /**/
+        Sorting_Array(elements);
       /*inicio código*/
       /*Inicio proceso de login*/
       int counter = 0;
@@ -88,14 +88,35 @@ public class Shoppingcart {
         return Arrays.stream(arr).anyMatch(item::equals);
     }
     public static void Sorting_Array(String[][] array){
-        int size = array.length;
-        String[] category = {};
+        ArrayList<String> category = new ArrayList<>();
+        int size = array.length-1; //aun no es utilizada, se utilizara si es escalable
+        for(int i= 0; i < size; i++){
+            category.add(array[i][2]);
+        }
+        Set<String> hs = new HashSet<>();
+        hs.addAll(category);
+        category.clear();
+        category.addAll(hs);
         int count = 0;
-        int i=0;
+        int x=0;
+        System.out.println(category.get(0));
         while(count <9){
-            System.out.println(array[i][1]+ ": $" +array[i][3]+ "   Descuento del % " +array[i][4]+ " Rating: " +array[i][5]);
-            i++;
+            if(array[x][2].equals(category.get(0))){
+                System.out.println(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]);
+            }
+            x++;
             count ++;
-        }       
+        }
+        x = 0;
+        count = 0;
+        System.out.println("");
+        System.out.println(category.get(1));
+        while(count<9){
+            if(array[x][2].equals(category.get(1))){
+                System.out.println(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]);
+            }
+            x++;
+            count++;
+        }
     }
 }
