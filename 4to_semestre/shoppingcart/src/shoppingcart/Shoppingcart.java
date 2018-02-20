@@ -5,24 +5,15 @@
  */
 package shoppingcart;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Shoppingcart {
     
     public int valid_login = 0;
     
     public static void main(String[] args) {
-      Scanner keyboard = new Scanner(System.in);
-      /*database for user & passwords*/
+        Scanner keyboard = new Scanner(System.in);
+        /*database for user & passwords*/
       HashMap<String, String> hmap = new HashMap<>();
       hmap.put("Theyought47@einrot.com","a01652138");
       hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
@@ -45,12 +36,12 @@ public class Shoppingcart {
       products.put(8,new String[]{"chicles clorent","comida","50","10","5"});
       products.put(9,new String[]{"gummy","comida","50","10","5"});*/
       String[] sorted = {""};
-      String[][] elements = { {"0","shampoo","limpieza","50","10","5"}, 
-          {"1","deshodorante","limpieza","50","10","5"},{"2","pasta dental","limpieza","50","10","5"},
-          {"3","gel","limpieza","50","10","5"},{"4","jabon","limpieza","50","10","5"},
-          {"5","chocolate","comida","50","10","5"},{"6","refesco","comida","50","10","5"},
-          {"7","sabritones","comida","50","10","5"},{"8","chicles clorent","comida","50","10","5"},
-          {"9","gummy","comida","50","10","5"}
+      String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
+          {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
+          {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
+          {"5","Chocolate","comida","50","10","5"},{"6","Refesco","comida","50","10","5"},
+          {"7","Sabritones","comida","50","10","5"},{"8","Chicles clorent","comida","50","10","5"},
+          {"9","Gummy","comida","50","10","5"}
       };
       /**/
         Sorting_Array(elements);
@@ -97,26 +88,34 @@ public class Shoppingcart {
         hs.addAll(category);
         category.clear();
         category.addAll(hs);
+        Set<String> category_1 = new TreeSet<>();
+        Set<String> category_2 = new TreeSet<>();
         int count = 0;
         int x=0;
         System.out.println(category.get(0));
         while(count <9){
             if(array[x][2].equals(category.get(0))){
-                System.out.println(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]);
+                category_1.add(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]+ " ID: " +array[x][0]);
             }
             x++;
             count ++;
         }
+        category_1.forEach((item) -> {
+            System.out.println(item);
+        });
         x = 0;
         count = 0;
         System.out.println("");
         System.out.println(category.get(1));
         while(count<9){
             if(array[x][2].equals(category.get(1))){
-                System.out.println(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]);
+                category_2.add(array[x][1]+ ": $" +array[x][3]+ "   Descuento del % " +array[x][4]+ " Rating: " +array[x][5]+ " ID: " +array[x][0]);
             }
             x++;
             count++;
         }
+        category_2.forEach((item) -> {
+            System.out.println(item);
+        });
     }
 }
