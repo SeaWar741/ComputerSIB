@@ -6,6 +6,7 @@
 package shoppingcart;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -26,6 +27,8 @@ public class Shoppingcart {
       hmap.put("0syed.sab@pokeett.site","7clqdwqnjz7ohj8e");
       hmap.put("oali.qasem@miur.ml","4trm8owbws7au24d");
       hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
+      hmap.put("juanca741@gmail.com","juanca741");
+      
       /**/
       /*database for products*/
       HashMap<Integer, String[]> products = new HashMap<>();
@@ -40,6 +43,17 @@ public class Shoppingcart {
       products.put(8,new String[]{"chicles clorent","comida","50","10","5"});
       products.put(9,new String[]{"gummy","comida","50","10","5"});
       /**/
+      /*productos al array*/
+      String[] sorted = {""};
+      String[][] elements = { {"0","shampoo","limpieza","50","10","5"}, 
+          {"1","deshodorante","limpieza","50","10","5"},{"2","pasta dental","limpieza","50","10","5"},
+          {"3","gel","limpieza","50","10","5"},{"4","jabon","limpieza","50","10","5"},
+          {"5","chocolate","comida","50","10","5"},{"6","refesco","comida","50","10","5"},
+          {"7","sabritones","comida","50","10","5"},{"8","chicles clorent","comida","50","10","5"},
+          {"9","gummy","comida","50","10","5"}
+      };
+      int size = elements.length;
+        System.out.println(size);
       /*inicio código*/
       /*Inicio proceso de login*/
       int counter = 0;
@@ -59,10 +73,8 @@ public class Shoppingcart {
       if(allowed == true){
           System.out.println("Procced");
           //insert the rest of the code
-          products.entrySet().forEach((entry) -> {
-              System.out.println(entry.getKey() + "/" + entry.getValue());
-          });
-      } 
+          System.out.println(Arrays.deepToString(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+      }
       else{
           System.out.println("Invalid, terminating process");
           System.exit(0);
@@ -70,5 +82,20 @@ public class Shoppingcart {
       /*fin proceso de login*/
       
       /*fin codigo*/
+    }
+
+    public static boolean contains(String[] arr, String item) {
+        return Arrays.stream(arr).anyMatch(item::equals);
+    }
+    public static void Sorting_Array(String[][] array){
+        int size = array.length;
+        String[] category = {};
+        int count = 0;
+        int i=0;
+        while(count <9){
+            System.out.println(array[i][1]+ ": $" +array[i][3]+ "   Descuento del % " +array[i][4]+ " Rating: " +array[i][5]);
+            i++;
+            count ++;
+        }       
     }
 }
