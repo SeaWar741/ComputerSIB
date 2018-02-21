@@ -12,19 +12,19 @@ public class Shoppingcart {
     public int valid_login = 0;
     public static Set<String> category_1 = new TreeSet<>();
     public static Set<String> category_2 = new TreeSet<>();
-    public static List<String> shopping_kart = new ArrayList<>();
+    public static Set<Integer> shopping_kart = new TreeSet<>();
     //end class constants
     public static void main(String[] args) {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true;
         Scanner keyboard = new Scanner(System.in);
         /*database for user & passwords*/
         HashMap<String, String> hmap = new HashMap<>();
-        hmap.put("Theyought47@einrot.com","a01652138");
-        hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
-        hmap.put("0syed.sab@pokeett.site","7clqdwqnjz7ohj8e");
-        hmap.put("oali.qasem@miur.ml","4trm8owbws7au24d");
-        hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
-        hmap.put("juanca741@gmail.com","juanca741");
+            hmap.put("Theyought47@einrot.com","a01652138");
+            hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
+            hmap.put("0syed.sab@pokeett.site","7clqdwqnjz7ohj8e");
+            hmap.put("oali.qasem@miur.ml","4trm8owbws7au24d");
+            hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
+            hmap.put("juanca741@gmail.com","juanca741");
         /**/
         String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
             {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
@@ -56,7 +56,21 @@ public class Shoppingcart {
             //insert the rest of the code
             Sorting_Array(elements);//<--- Imprimir la lista de productos categorizados y por orden alfabetico
             //System.out.println(Arrays.deepToString(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-            adding_to(elements);
+            boolean add_loop = false;
+            while(add_loop == false){
+                adding_to(elements);
+                System.out.println();
+                String repeat = keyboard.nextLine();
+                if(repeat.toLowerCase().equals("y")){
+                    add_loop = false;
+                }
+                else if(repeat.toLowerCase().equals("n")){
+                    add_loop = true;
+                }
+                else{
+                    System.out.println("error");
+                }
+            }
         }
         else{
             System.out.println("Invalid, terminating process");
@@ -65,25 +79,6 @@ public class Shoppingcart {
         /*fin proceso de login*/
         System.out.println("");
         /*fin codigo*/
-    }
-    
-    public static void adding_to(String[][] list){
-        Scanner keyboard = new Scanner(System.in);
-        System.out.println("Desea agregar algun producto?");
-        System.out.println("y/n");
-        String election = keyboard.nextLine();
-        int counter = 0;
-        int x = 0;
-        switch (election.toLowerCase()) {
-            case "y":
-                System.out.println("Ingresar ID del producto a añadir");
-                break;
-            case "n":
-                break;
-            default:
-                error_execute_exit();
-                break;
-        }
     }
     
     public static void Sorting_Array(String[][] array){
@@ -130,6 +125,49 @@ public class Shoppingcart {
             System.out.println("---------------------------------------------------------------");
         });
     }
+    
+    public static void adding_to(String[][] array){
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Desea agregar algun producto?");
+        System.out.println("y/n");
+        String selection = keyboard.nextLine();
+        int counter = 0;
+        int x = 0;
+        switch (selection.toLowerCase()) {
+            case "y":
+                System.out.println("Ingresar ID del producto a añadir");
+                String product = keyboard.nextLine();
+                while(counter < 9){
+                    if(array[x][0].equals(product)){
+                        String price = array[x][3];
+                        String discount = array[x][4];
+                        price_discount(shopping_kart, price, discount);
+                    }
+                    x ++;
+                    counter ++;
+                }
+                System.out.println(shopping_kart);
+                break;
+            case "n":
+                System.out.println("Checkout iitializing");
+                //funcion checkout
+                break;
+            default:
+                error_execute_exit();
+                break;
+        }
+    }
+    
+    public static void price_discount(Set elements,String price, String discount){
+        int intprice = Integer.parseInt(price);
+        int intdisc = Integer.parseInt(discount);
+        int part1 = 100 - intdisc;
+        int part2 = intprice * part1;
+        int total = part2/100;
+        System.out.println(total);
+        elements.add(total);
+    }
+    
     public static void error_execute_exit(){
         System.out.println("Error, cerrando programa");
         System.exit(0);

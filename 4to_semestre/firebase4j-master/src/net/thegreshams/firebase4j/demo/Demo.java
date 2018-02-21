@@ -16,8 +16,8 @@ public class Demo {
 	public static void main(String[] args) throws FirebaseException, JsonParseException, JsonMappingException, IOException, JacksonUtilityException {
 
 		
-		// get the base-url (ie: 'http://gamma.firebase.com/username')
-		String firebase_baseUrl = null;
+		// get the base-url (ie: 'http://gamma.firebase.com/kukulkan-5fe66')
+		String firebase_baseUrl = "https://kukulkan-5fe66.firebaseio.com/";
 		for( String s : args ) {
 
 			if( s == null || s.trim().isEmpty() ) continue;
