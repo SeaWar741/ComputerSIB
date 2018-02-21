@@ -12,7 +12,8 @@ public class Shoppingcart {
     public int valid_login = 0;
     public static Set<String> category_1 = new TreeSet<>();
     public static Set<String> category_2 = new TreeSet<>();
-    public static Set<Integer> shopping_kart = new TreeSet<>();
+    public static ArrayList<String> shopping_kart_items = new ArrayList<String>();
+    public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
     //end class constants
     public static void main(String[] args) {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true;
@@ -56,21 +57,7 @@ public class Shoppingcart {
             //insert the rest of the code
             Sorting_Array(elements);//<--- Imprimir la lista de productos categorizados y por orden alfabetico
             //System.out.println(Arrays.deepToString(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-            boolean add_loop = false;
-            while(add_loop == false){
-                adding_to(elements);
-                System.out.println();
-                String repeat = keyboard.nextLine();
-                if(repeat.toLowerCase().equals("y")){
-                    add_loop = false;
-                }
-                else if(repeat.toLowerCase().equals("n")){
-                    add_loop = true;
-                }
-                else{
-                    System.out.println("error");
-                }
-            }
+            adding_to(elements);
         }
         else{
             System.out.println("Invalid, terminating process");
@@ -128,44 +115,59 @@ public class Shoppingcart {
     
     public static void adding_to(String[][] array){
         Scanner keyboard = new Scanner(System.in);
+        boolean repetition = false;
         System.out.println("Desea agregar algun producto?");
-        System.out.println("y/n");
-        String selection = keyboard.nextLine();
-        int counter = 0;
-        int x = 0;
-        switch (selection.toLowerCase()) {
-            case "y":
-                System.out.println("Ingresar ID del producto a añadir");
-                String product = keyboard.nextLine();
-                while(counter < 9){
-                    if(array[x][0].equals(product)){
-                        String price = array[x][3];
-                        String discount = array[x][4];
-                        price_discount(shopping_kart, price, discount);
+        while(repetition == false){
+            System.out.println("y/n");
+            String selection = keyboard.nextLine();
+            int counter = 0;
+            int count = 0;
+            int x = 0;
+            switch (selection.toLowerCase()) {
+                case "y":
+                    System.out.println("Ingresar ID del producto a añadir");
+                    String product = keyboard.nextLine();
+                    //insertar hacer la comparacion indice del producto, insertar solo el nombre, se debe de hacer con un for
+                    while(count<9){
+                        if(array[x][0].equals(product)){
+                            shopping_kart_items.add(array[x][1]);
+                        }
+                        x++;
+                        count++;
                     }
-                    x ++;
-                    counter ++;
-                }
-                System.out.println(shopping_kart);
-                break;
-            case "n":
-                System.out.println("Checkout iitializing");
-                //funcion checkout
-                break;
-            default:
-                error_execute_exit();
-                break;
+                    x = 0;
+                    while(counter < 9){
+                        if(array[x][0].equals(product)){
+                            String price = array[x][3];
+                            String discount = array[x][4];
+                            price_discount(shopping_kart_money, price, discount);
+                        }
+                        x ++;
+                        counter ++;
+                    }
+                    System.out.println(shopping_kart_money);
+                    System.out.println(shopping_kart_items);//inserta el id, replazar por el nombre del producto
+                    break;
+                case "n":
+                    System.out.println("Checkout iitializing");
+                    repetition = true;
+                    //funcion checkout
+                    break;
+                default:
+                    error_execute_exit();
+                    break;
+            }
         }
     }
     
-    public static void price_discount(Set elements,String price, String discount){
+    public static void price_discount(ArrayList<Integer> shopping_kart,String price, String discount){
         int intprice = Integer.parseInt(price);
         int intdisc = Integer.parseInt(discount);
         int part1 = 100 - intdisc;
         int part2 = intprice * part1;
         int total = part2/100;
         System.out.println(total);
-        elements.add(total);
+        shopping_kart.add(total);
     }
     
     public static void error_execute_exit(){
