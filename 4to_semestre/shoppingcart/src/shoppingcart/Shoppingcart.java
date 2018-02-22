@@ -5,6 +5,7 @@
  */
 package shoppingcart;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.Thread.sleep;
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class Shoppingcart {
     public static Set<String> category_1 = new TreeSet<>();
     public static Set<String> category_2 = new TreeSet<>();
     public static ArrayList<String> shopping_kart_items = new ArrayList<String>();
+    public static ArrayList<Integer> shopping_kart_money_original = new ArrayList<Integer>();
     public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
     public static String promt = ">";
     //end class constants
@@ -38,13 +40,15 @@ public class Shoppingcart {
         };
         /**/
         /*inicio código*/
-        /*Inicio proceso de login*/
+        //Inicio proceso de login --> pasar a funcion generica con opcion para recuperacion de contraseña
         int counter = 0;
         boolean allowed = false;
         while(counter < 3 && allowed == false){
             System.out.println("Ingresar usuario");
+            System.out.print(promt);
             String user = keyboard.nextLine();
             System.out.println("Ingresar Contraseña");
+            System.out.print(promt);
             String password = keyboard.nextLine();
             if(password.equals(hmap.get(user))){
                 allowed = true;
@@ -53,6 +57,7 @@ public class Shoppingcart {
                 counter ++;
             }
         }
+        System.out.println();
         if(allowed == true){
             System.out.println("Procced");
             loading_animation();
@@ -60,9 +65,6 @@ public class Shoppingcart {
             selection_menu_display();
             selection_menu(elements);
             //System.out.println(Arrays.deepToStrijuanng(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-            //insertar menu de opciones a elegir
-            System.out.println(shopping_kart_items);
-            System.out.println(shopping_kart_money);
         }
         else{
             System.out.println("Invalid, terminating process");
@@ -94,29 +96,33 @@ public class Shoppingcart {
     
     public static void selection_menu(String[][] elements){
         Scanner keyboard = new Scanner(System.in);
+        System.out.println("Selecionar una opcion del menu");
         System.out.print(promt);
         Integer selection = keyboard.nextInt();
-        switch (selection) {
-            case 1:
-                Sorting_Array(elements);//<--- Imprimir la lista de productos categorizados y por orden alfabetico
-                break;
-            case 2:
-                adding_to(elements);
-                break;
-            case 3:
-                deleting_from(shopping_kart_items);
-                break;
-            case 4:
-                display_kart();
-                break;
-            case 5:
-                checkout(); //aun no se ha realizado la funcion
-                break;
-            case 6:
-                System.out.println("");
-                break;
-            default:
-                break;
+        boolean loop_continue = true;
+        while(loop_continue = true){
+            switch (selection) {
+                case 1:
+                    Sorting_Array(elements);//<--- Imprimir la lista de productos categorizados y por orden alfabetico
+                    break;
+                case 2:
+                    adding_to(elements);
+                    break;
+                case 3:
+                    deleting_from(shopping_kart_items);
+                    break;
+                case 4:
+                    display_kart();
+                    break;
+                case 5:
+                    checkout(); //aun no se ha realizado la funcion
+                    break;
+                case 6:
+                    System.out.println("");
+                    break;
+                default:
+                    break;
+            }
         }
         
     }
@@ -193,6 +199,8 @@ public class Shoppingcart {
                         if(array[x][0].equals(product)){
                             String price = array[x][3];
                             String discount = array[x][4];
+                            int price_int = parseInt(price);
+                            shopping_kart_money_original.add(price_int);
                             price_discount(shopping_kart_money, price, discount);
                         }
                         x ++;
@@ -215,6 +223,7 @@ public class Shoppingcart {
     public static void deleting_from(ArrayList arry){
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Ingresar producto a borrar");
+        System.out.println(promt);
         String delete_in_product = keyboard.nextLine();
         String delete_product = capitalize(delete_in_product);
         System.out.println(delete_product);
@@ -237,12 +246,28 @@ public class Shoppingcart {
     }
     
     public static void display_kart(){
-        int i;
         double sum = 0;
-        for(i = 1; i < shopping_kart_money.size(); i++){
+        double sum_or = 0;
+        for(int i = 1; i < shopping_kart_money.size(); i++){
             sum += shopping_kart_money.get(i);
         }
-        System.out.println(sum);
+        for(int i = 1; i < shopping_kart_money_original.size(); i++){
+            sum += shopping_kart_money_original.get(i);
+        }
+        ArrayList<String> items = new ArrayList<>();
+        for(int i = 1; i < shopping_kart_money.size(); i++){
+            
+        }
+        Set<String> printed = new HashSet<>();
+        shopping_kart_items.stream().filter((s) -> (printed.add(s)) // Set.add() also tells if the element was in the Set!
+        ).forEachOrdered((s) -> {
+            System.out.println("Producto: " + s
+                    + ", cantidad: " + Collections.frequency(shopping_kart_items, s));
+        });
+        System.out.println("El Subtotal de la cuenta es de $+"+sum_or );
+        System.out.println("Total de la cuenta es de $"+sum);
+        //System.out.println(shopping_kart_items);
+        //System.out.println(shopping_kart_money);
     }
     
     public static void checkout(){
