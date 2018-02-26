@@ -34,6 +34,15 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
         /**/
+        /*database for users & security answer*/
+        HashMap<String,String> security = new HashMap<>();
+            security.put("Theyought47@einrot.com","pepe");
+            security.put("wcena201@ndfbmail.ga","thor");
+            security.put("0syed.sab@pokeett.site","gabriel");
+            security.put("oali.qasem@miur.ml","kala");
+            security.put("idigao.pga@888z5.ml","choli");
+            security.put("juanca741@gmail.com","olita");            
+        /**/
         String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
             {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
             {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
@@ -85,6 +94,7 @@ public class Shoppingcart {
         /*fin codigo*/
     }
     
+    //funciones del código
     public static void welcome_menu_selection(){ //completar funcion
         Scanner keyboard = new Scanner(System.in);
         boolean loop_do = true;
@@ -117,6 +127,66 @@ public class Shoppingcart {
         }
     }
     
+    public static boolean login_permission(HashMap database, HashMap answers) throws InterruptedException{
+        Scanner keyboard = new Scanner(System.in);
+        int counter = 0;
+        boolean allowed = false;
+        while(counter < 3 && allowed == false){
+            System.out.println("Ingresar usuario");
+            System.out.print(promt);
+            String user = keyboard.nextLine();
+            System.out.println("Ingresar Contraseña");
+            System.out.print(promt);
+            String password = keyboard.nextLine();
+            if(password.equals(database.get(user))){
+                return true;
+            }
+            else{
+                counter ++;
+            }
+        }
+        System.out.println();
+        System.out.println("Desea recuperar su contraseña? y/n");
+        String password_recovery = keyboard.nextLine().toLowerCase();
+        switch (password_recovery) {
+            case "y":
+                System.out.println();
+                System.out.println("Ingresar usuario");
+                String user = keyboard.nextLine();
+                System.out.println("¿Cuál es el nombre de tu mascota?");
+                String user_answer = keyboard.nextLine();
+                if(user_answer.equals(answers.get(user))){
+                    System.out.println();
+                    System.out.println("Identidad verificada");
+                    System.out.println("Ingresar nueva contraseña");
+                    System.out.print(promt);
+                    String new_password = keyboard.nextLine();
+                    database.put(user,new_password);
+                    System.out.println();
+                    System.out.println("Contraseña actualizada!");
+                }
+                else{
+                    System.out.println("Acceso denegado");
+                }   break;
+            case "n":
+                System.out.println("Entendido");
+                break;
+            default:
+                System.out.println("Ingresar valor valido");
+                break;
+        }
+        System.out.println();
+        if(allowed == true){
+            System.out.println("Procced");
+            loading_animation();
+            return true;
+            //System.out.println(Arrays.deepToStrijuanng(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+        }
+        else{
+            System.out.println("Invalid, terminating process");
+            return false;
+        }   
+    }
     
     public static void selection_menu_display(){
         System.out.println(" _______________________________________________ ");
@@ -176,7 +246,7 @@ public class Shoppingcart {
                 selection = keyboard.nextInt();
             }
             else{
-                
+                exit();
             }
         }
         
@@ -262,6 +332,7 @@ public class Shoppingcart {
                         counter ++;
                     }
                     System.out.println("Productos seleccionados: " +shopping_kart_items);
+                    System.out.println("Subtotal de productos seleccionados" + shopping_kart_money_original);
                     System.out.println("Total de los productos seleccionados: "+shopping_kart_money);
                     break;
                 case "n":
@@ -303,15 +374,11 @@ public class Shoppingcart {
     public static void display_kart(){
         double sum = 0;
         double sum_or = 0;
+        for(int i = 1; i < shopping_kart_money_original.size(); i++){
+            sum_or += shopping_kart_money_original.get(i);
+        }
         for(int i = 1; i < shopping_kart_money.size(); i++){
             sum += shopping_kart_money.get(i);
-        }
-        for(int i = 1; i < shopping_kart_money_original.size(); i++){
-            sum += shopping_kart_money_original.get(i);
-        }
-        ArrayList<String> items = new ArrayList<>();
-        for(int i = 1; i < shopping_kart_money.size(); i++){
-            
         }
         Set<String> printed = new HashSet<>();
         shopping_kart_items.stream().filter((s) -> (printed.add(s)) // Set.add() also tells if the element was in the Set!
