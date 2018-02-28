@@ -6,10 +6,7 @@
 package shoppingcart;
 
 import static java.lang.Integer.parseInt;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Shoppingcart {
     //class constants
@@ -33,6 +30,7 @@ public class Shoppingcart {
             hmap.put("oali.qasem@miur.ml","4trm8owbws7au24d");
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
+            hmap.put("matheo@pinzon.com.mx","matheo123");
         /**/
         /*database for users & security answer*/
         HashMap<String,String> security = new HashMap<>();
@@ -41,7 +39,8 @@ public class Shoppingcart {
             security.put("0syed.sab@pokeett.site","gabriel");
             security.put("oali.qasem@miur.ml","kala");
             security.put("idigao.pga@888z5.ml","choli");
-            security.put("juanca741@gmail.com","olita");            
+            security.put("juanca741@gmail.com","olita");
+            security.put("matheo@pinzon.com.mx","charlott");
         /**/
         String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
             {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
@@ -57,41 +56,26 @@ public class Shoppingcart {
             security_answers.add("Robert");
             security_answers.add("Harry");
             security_answers.add("Pan");
+            security_answers.add("charlott");
         /**/
         /*inicio código*/
-        //Inicio proceso de login --> pasar a funcion generica con opcion para recuperacion de contraseña
-        int counter = 0;
-        boolean allowed = false;
-        while(counter < 3 && allowed == false){
-            System.out.println("Ingresar usuario");
-            System.out.print(promt);
-            String user = keyboard.nextLine();
-            System.out.println("Ingresar Contraseña");
-            System.out.print(promt);
-            String password = keyboard.nextLine();
-            if(password.equals(hmap.get(user))){
-                allowed = true;
+        boolean run = true;
+        while(run = true){
+            boolean login = login_permission(hmap,security);
+            if(login == true){
+                loading_animation();
+                //insert the rest of the code
+                selection_menu_display();
+                selection_menu(elements);
             }
             else{
-                counter ++;
+                System.out.println("Invalid login, terminating process");
             }
+            System.out.println();
+            System.out.println();
         }
-        System.out.println();
-        if(allowed == true){
-            System.out.println("Procced");
-            loading_animation();
-            //insert the rest of the code
-            selection_menu_display();
-            selection_menu(elements);
-            //System.out.println(Arrays.deepToStrijuanng(elements).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-        }
-        else{
-            System.out.println("Invalid, terminating process");
-            System.exit(0);
-        }
-        /*fin proceso de login*/
-        System.out.println("");
-        /*fin codigo*/
+        //encryption password = new encryption("hola");
+        /*fin del codigo*/
     }
     
     //funciones del código
@@ -207,7 +191,7 @@ public class Shoppingcart {
         System.out.println();
     }
     
-    public static void selection_menu(String[][] elements){
+    public static void selection_menu(String[][] elements) throws InterruptedException{
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Selecionar una opcion del menu");
         System.out.print(promt);
@@ -231,8 +215,9 @@ public class Shoppingcart {
                     checkout(); //aun no se ha realizado la funcion
                     break;
                 case 6:
-                    loop_continue = false;
+                    exit();
                     System.out.println("");
+                    loop_continue = false;
                     break;
                 default:
                     break;
@@ -392,9 +377,20 @@ public class Shoppingcart {
         //System.out.println(shopping_kart_money);
     }
     
-    public static void checkout(){
+    public static void checkout() throws InterruptedException{
         //code
-        System.out.println();
+        if(shopping_kart_items == null){
+            System.out.println("cuenta en: $0");
+            exit();
+        }
+        else{
+            System.out.println("Validando pago");
+            loading_animation();
+            System.out.println("Pago validado, Gracias Por su compra");
+            System.out.println();
+            exit();
+        }
+        
     }
     
     
