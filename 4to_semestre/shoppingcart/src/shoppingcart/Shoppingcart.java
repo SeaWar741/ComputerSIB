@@ -7,6 +7,7 @@ package shoppingcart;
 
 import static java.lang.Integer.parseInt;
 import java.util.*;
+import static java.util.Objects.hash;
 
 public class Shoppingcart {
     //class constants
@@ -24,6 +25,7 @@ public class Shoppingcart {
         //Solucion temporal, pasar a un archivo .txt encriptado(contraseñas y usuarios) con la api de dropbox
         /*database for user & passwords*/
         HashMap<String, String> hmap = new HashMap<>();
+            /*original
             hmap.put("Theyought47@einrot.com","a01652138");
             hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
             hmap.put("0syed.sab@pokeett.site","7clqdwqnjz7ohj8e");
@@ -31,6 +33,11 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
             hmap.put("matheo@pinzon.com.mx","matheo123");
+            */
+            
+            //encriptado
+            hmap.put("c5f3c78fd7a241427a8f062aed23924fae7a9fb7","efb6aacbde32d26bff954cfed9ffe3372104cf18");
+            hmap.put("","");
         /**/
         /*database for users & security answer*/
         HashMap<String,String> security = new HashMap<>();
@@ -49,14 +56,6 @@ public class Shoppingcart {
             {"7","Sabritones","comida","50","10","5"},{"8","Chicles clorent","comida","50","10","5"},
             {"9","Gummy","comida","50","10","5"}
         };
-        ArrayList<String> security_answers = new ArrayList<>();
-            security_answers.add("Pepe");
-            security_answers.add("Thor");
-            security_answers.add("Puki");
-            security_answers.add("Robert");
-            security_answers.add("Harry");
-            security_answers.add("Pan");
-            security_answers.add("charlott");
         /**/
         /*inicio código*/
         boolean run = true;
@@ -395,21 +394,6 @@ public class Shoppingcart {
     
     
     //funciones complementarias
-    public static String getHash(String txt, String hashType){
-        try{
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
-            byte[] array = md.digest(txt.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < array.length; ++i){
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-           
     public static String capitalize(String text){
     String c = (text != null)? text.trim() : "";
     String[] words = c.split(" ");
@@ -440,5 +424,26 @@ public class Shoppingcart {
             //sleep(250);<< añadir al final del codigo
         }
         System.out.println();
+    }
+    
+    //encriptado de datos
+    public static String algorithmencrypt(String txt){
+        String password = String.valueOf(hash(txt + "seawar741seawar741"));
+        return password;
+    }
+    
+    public static String getHash(String txt, String hashType){
+        try{
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
+            byte[] array = md.digest(txt.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < array.length; ++i){
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

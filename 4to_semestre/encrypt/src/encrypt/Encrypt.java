@@ -17,11 +17,7 @@ public class Encrypt {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(getHash(algorithmencrypt("hola"),"Sha1"));
-        System.out.println(hash("hola"+"jkfdealnjaflnjfdalnjdakjlndanlkdawnñlkdawnlkflknfeqwpniafwpjnlkfwnipwfdohiw"));
-        System.out.println(hash("hola"+"jkfdealnjaflnjfdalnjdakjlndanlkdawnñlkdawnlkflknfeqwpniafwpjnlkfwnipwfdohiw"));
-        System.out.println("hola"+"jsajwsajjasjsaj");
-        System.out.println(hash("hola"));
+        System.out.println(getHash(algorithmencrypt("a01652138"),"Sha1"));
     }
     
     public static String algorithmencrypt(String txt){
