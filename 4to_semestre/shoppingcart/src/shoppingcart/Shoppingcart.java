@@ -5,12 +5,18 @@
  */
 package shoppingcart;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.*;
 import static java.util.Objects.hash;
+import static javax.script.ScriptEngine.FILENAME;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+
 
 public class Shoppingcart {
     //class constants
@@ -21,13 +27,17 @@ public class Shoppingcart {
     public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
     public static String security_question = "¿Cúal el nombre de tu primer mascota?";
     public static String promt = ">";
+    private static HashMap<String, String> hmap = new HashMap<>();
+    private static HashMap<String,String> security = new HashMap<>();
+    private static final String FILENAME = "users.txt";
+    public static String[][] elements = new String[6][10]; 
     //end class constants
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true; Metodo necesita perfeccionamiento
         Scanner keyboard = new Scanner(System.in);
         //Solucion temporal, pasar a un archivo .txt encriptado(contraseñas y usuarios) con la api de dropbox
         /*database for user & passwords*/
-        HashMap<String, String> hmap = new HashMap<>();
+        //HashMap<String, String> hmap = new HashMap<>();
             /* cuentas con contraseñas reales sin encriptar
             hmap.put("Theyought47@einrot.com","a01652138");
             hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
@@ -36,7 +46,7 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
             hmap.put("matheo@pinzon.com.mx","matheo123");
-            */
+            //encriptado
             hmap.put("Theyought47@einrot.com","efb6aacbde32d26bff954cfed9ffe3372104cf18");
             hmap.put("wcena201@ndfbmail.ga","2e07125d0b7b6ea94cad1723649137215ab09d10");
             hmap.put("0syed.sab@pokeett.site","22fa9a71b6eaf5ad83d6038f33491728982856d7");
@@ -55,16 +65,17 @@ public class Shoppingcart {
             security.put("idigao.pga@888z5.ml","choli");
             security.put("juanca741@gmail.com","olita");
             security.put("matheo@pinzon.com.mx","charlott");
-        /**/
+        /
         HashMap<String,String> security = new HashMap<>();
-            security.put("Theyought47@einrot.com","pepe");
-            security.put("wcena201@ndfbmail.ga","thor");
-            security.put("0syed.sab@pokeett.site","gabriel");
-            security.put("oali.qasem@miur.ml","kala");
-            security.put("idigao.pga@888z5.ml","choli");
+            security.put("Theyought47@einrot.com","17765ffe166b72d80a602ba7daaf1029c582f531");
+            security.put("wcena201@ndfbmail.ga","8fdc441e668daf84f902d1dfc8de089a9579f548");
+            security.put("0syed.sab@pokeett.site","0fbda0462c9539b02f0498148e0ab135031cdaa8");
+            security.put("oali.qasem@miur.ml","525b752f115f4d0790fff75b07aaa3e0897832a5");
+            security.put("idigao.pga@888z5.ml","c50a2b3c108227acaf199be912f963ae88e32a23");
             security.put("juanca741@gmail.com","1e54b98763365a39b9041b49e8b3fce4b5e4dcb2");
             security.put("matheo@pinzon.com.mx","charlott");
         /**/
+        
         //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
         String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
             {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
@@ -74,7 +85,7 @@ public class Shoppingcart {
             {"9","Gummy","comida","50","10","5"}
         };
         /**/
-        
+        reading();
         /*inicio código*/
         boolean run = true;
         while(run = true){
@@ -492,9 +503,8 @@ public class Shoppingcart {
     }
     
     //escritura en txt
-    public static void writting(){
+    public static void writting(String number){
         String fileName = "texto.txt";
-
         try {
             // Assume default encoding.
             FileWriter fileWriter =
@@ -523,7 +533,24 @@ public class Shoppingcart {
         }
     }
     
-    public static void reading(){
+   public static void reading() throws IOException{
+	try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null && !"".equals(sCurrentLine = br.readLine())) { // se hara una lectura, añadiendo la cdontraseña, usuario y respuesta a pregunta de seguridad dentro de dos hash(security y hmap)
+                String[] usp = new String[3];
+                usp = sCurrentLine.split(",");
+                String user = usp[0];
+                String pass = usp[1];
+                String ans = usp[2];
+                hmap.put(user,pass);
+                security.put(user,ans);
+            }
+        }
+    }
+    
+    public static void user_register(String user, String pass, String sec_a){
+        pass = encrypt(pass);
+        sec_a = encrypt(pass);
         
     }
 }

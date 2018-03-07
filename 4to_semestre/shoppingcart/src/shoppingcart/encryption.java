@@ -37,8 +37,5 @@ public class encryption {
         txt = algorithmencrypt(txt);
         System.out.println(txt);
     }
-    
-   /*encryption(String hola) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+
 }
