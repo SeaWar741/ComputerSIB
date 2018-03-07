@@ -5,6 +5,9 @@
  */
 package shoppingcart;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.*;
 import static java.util.Objects.hash;
@@ -359,23 +362,28 @@ public class Shoppingcart {
     
     public static void deleting_from(ArrayList arry){//elimiar del carrito
         Scanner keyboard = new Scanner(System.in); //inicializar el scanner
+        Scanner key = new Scanner(System.in);
         System.out.println("Ingresar nombre del producto a borrar"); //se pide el nombre del producto a borrar
         System.out.print(promt);
         String delete_in_product = keyboard.nextLine(); //ingresar el nombre
         String delete_product = capitalize(delete_in_product); //se le pone la primer letra como mayuscula
+        System.out.println("Ingresar la cantidad de producto a eliminar");
+        int quantity = key.nextInt();
         int count = 0; //counter en o
         int x = 0; //x en 0
-        int delete_product_index = arry.indexOf(delete_product); //conseguir el indice del producto a eliminar
-        //falta pedir la cantida de productos, por ahora solo elimina uno a la vez
         if(arry.contains(delete_product)){//si el array contiene el producto a eliminar entonces se realiza la operacion
-            shopping_kart_items.remove(delete_product);//se elimina de los items
-            shopping_kart_money_original.remove(delete_product_index);//se elimina del original
-            shopping_kart_money.remove(delete_product_index);//se elimina del descuento
+            for(int i = 0; i< quantity; i++){ // <----- Arreglar para que no haga tanto display del string
+                int delete_product_index = arry.indexOf(delete_product); //conseguir el indice del producto a eliminar
+                //falta pedir la cantida de productos, por ahora solo elimina uno a la vez
+                    shopping_kart_items.remove(delete_product);//se elimina de los items
+                    shopping_kart_money_original.remove(delete_product_index);//se elimina del original
+                    shopping_kart_money.remove(delete_product_index);//se elimina del descuento
+            }
         }
         else{
-            System.out.println("");//si no esta entonces se dice que no se encuentra en el carrito
-            System.out.println("Este producto no se encuentra en su carrito");
-        }
+                System.out.println("");//si no esta entonces se dice que no se encuentra en el carrito
+                System.out.println("Este producto no se encuentra en su carrito");
+            }
     }
     
     public static void price_discount(ArrayList<Integer> shopping_kart,String price, String discount){//hacer el desucento del product
@@ -481,5 +489,41 @@ public class Shoppingcart {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+    
+    //escritura en txt
+    public static void writting(){
+        String fileName = "texto.txt";
+
+        try {
+            // Assume default encoding.
+            FileWriter fileWriter =
+                new FileWriter(fileName);
+
+            // Note that write() does not automatically
+            // append a newline character.
+            try ( // Always wrap FileWriter in BufferedWriter.
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+                // Note that write() does not automatically
+                // append a newline character.
+                bufferedWriter.write("Hello there,");
+                bufferedWriter.write(" here is some text.");
+                bufferedWriter.newLine();
+                bufferedWriter.write("We are writing");
+                bufferedWriter.write(" the text to the file.");
+                // Always close files.
+            }
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error writing to file '"
+                + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+    }
+    
+    public static void reading(){
+        
     }
 }
