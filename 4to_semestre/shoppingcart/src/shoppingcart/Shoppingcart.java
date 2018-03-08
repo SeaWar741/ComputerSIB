@@ -11,11 +11,17 @@ import static java.util.Objects.hash;
 import static javax.script.ScriptEngine.FILENAME;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Shoppingcart {
@@ -31,6 +37,9 @@ public class Shoppingcart {
     private static HashMap<String,String> security = new HashMap<>();
     private static final String FILENAME = "users.txt";
     public static String[][] elements = new String[6][10]; 
+    public static String total_cost;
+    public static String subtotal_cost;
+    private static String us;
     //end class constants
     public static void main(String[] args) throws InterruptedException, IOException {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true; Metodo necesita perfeccionamiento
@@ -149,6 +158,7 @@ public class Shoppingcart {
             System.out.println("Ingresar usuario");//se imprime ingresar usuario
             System.out.print(promt);//se imprime en la misma linea promt
             String user = keyboard.nextLine();//se pide que el usuario ingrese su usuario
+            us = user;
             System.out.println("Ingresar Contraseña"); //se imprime ingresar contraseña
             System.out.print(promt); //se imprime en la misma linea promt
             String password = keyboard.nextLine(); //se pide que el usuario ingrese si contraseña
@@ -223,7 +233,7 @@ public class Shoppingcart {
         System.out.println();
     }
     
-    public static void selection_menu(String[][] elements) throws InterruptedException{ //funcion para la seleccion del usuario
+    public static void selection_menu(String[][] elements) throws InterruptedException, FileNotFoundException, UnsupportedEncodingException{ //funcion para la seleccion del usuario
         Scanner keyboard = new Scanner(System.in);//inicializacion del scanner
         System.out.println("Selecionar una opcion del menu");
         System.out.print(promt);
@@ -421,11 +431,13 @@ public class Shoppingcart {
             System.out.println("Producto: " + s
                     + ", cantidad: " + Collections.frequency(shopping_kart_items, s)); //se imprime el producto, con la cantidad (frecuencia) que aparecen en el set
         });
-        System.out.println("El Subtotal de la cuenta es de $"+sum_or );//se imprime el subtotal
-        System.out.println("Total de la cuenta es de $"+sum);//se imprime el total(con descuento
+        subtotal_cost = "El Subtotal de la cuenta es de $"+sum_or;//se imprime el subtotal
+        System.out.println(subtotal_cost);
+        total_cost = "Total de la cuenta es de $"+sum;
+        System.out.println(total_cost);//se imprime el total(con descuento
     }
     
-    public static void checkout() throws InterruptedException{ //funcion para el checkout
+    public static void checkout() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException{ //funcion para el checkout
         //code
         if(shopping_kart_items == null){ //si el carro no tiene nada entonces se imprime que la cuenta esta en 0 y se cierra el programa
             System.out.println("cuenta en: $0");
@@ -433,8 +445,10 @@ public class Shoppingcart {
         }
         else{//si no esta vacio entonces se procede al pago
             //falta implementar la verificacion de tarjetas de credito con el agoritmo de encriptacion
+            display_kart();
             System.out.println("Validando pago"); 
             loading_animation();
+            writting();
             System.out.println("Pago validado, Gracias Por su compra");
             System.out.println();
             exit();//se cierra el programa
@@ -503,34 +517,62 @@ public class Shoppingcart {
     }
     
     //escritura en txt
-    public static void writting(String number){
-        String fileName = "texto.txt";
-        try {
-            // Assume default encoding.
-            FileWriter fileWriter =
-                new FileWriter(fileName);
-
-            // Note that write() does not automatically
-            // append a newline character.
-            try ( // Always wrap FileWriter in BufferedWriter.
-                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-                // Note that write() does not automatically
-                // append a newline character.
-                bufferedWriter.write("Hello there,");
-                bufferedWriter.write(" here is some text.");
-                bufferedWriter.newLine();
-                bufferedWriter.write("We are writing");
-                bufferedWriter.write(" the text to the file.");
-                // Always close files.
+    public static void writting() throws FileNotFoundException, UnsupportedEncodingException{
+        try (PrintWriter writer = new PrintWriter("Ticket.txt")) {
+            double sum = 0; //double con suma
+            double sum_or = 0; //double suma original 
+            writer.println("      _  ___      _          _                 ");
+            writer.println("     | |/ //_  _ | | ___   _| |  ___ __ _ _ __  ");
+            writer.println("     | ' //  | | | |/ /  | | | |// __// _` | '_ \\ ");
+            writer.println("     | . \\   |_| |   < | |_| | | (_|   (_| | | | |");
+            writer.println("     |_|\\_\\__,_|_|\\_\\__,_|_|\\___\\____|_| |_|");
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println("[Usuario]: " +us);
+            writer.println();
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Date date = new Date();
+            writer.println("[Fecha(dd/mm/yr)]: " +date.toString());
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println();
+            for(int i = 1; i < shopping_kart_money_original.size(); i++){//para cada elmento del shopping cart se le hace suma, esto para poder conocer el subtotal de todos los elementos en el carrito sin el descuento
+                sum_or += shopping_kart_money_original.get(i);
             }
-        }
-        catch(IOException ex) {
-            System.out.println(
-                "Error writing to file '"
-                + fileName + "'");
-            // Or we could just do this:
-            // ex.printStackTrace();
-        }
+            for(int i = 1; i < shopping_kart_money.size(); i++){//para cada elemento del shopping cart se le hace suma,esto para conocer el total de todos los elementos en el carrito con el descuento
+                sum += shopping_kart_money.get(i);
+            }
+            Set<String> printed = new HashSet<>(); //se crea un hash llamado printed
+            shopping_kart_items.stream().filter((s) -> (printed.add(s)) // set.add () te dice si el elemento esta en el set, esto para saber cuantos productos hay por cada uno
+            ).forEachOrdered((s) -> {
+                writer.println("Producto: " + s
+                        + ", cantidad: " + Collections.frequency(shopping_kart_items, s)); //se imprime el producto, con la cantidad (frecuencia) que aparecen en el set
+            });
+            writer.println();
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println();
+            writer.println(subtotal_cost);
+            writer.println(total_cost);
+            writer.println();
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println("		   Gracias por su compra");
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println();
+            writer.println("            I.V.A Incluido en todos los productos");
+            writer.println();
+            writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
+            writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
+            writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
+            writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
+            writer.println("| 	    2 5 4 5 5 6 4 4 6 2 4 6 8 4  55 5          |");
+            
+            /*
+            bufferedWriter.write("Hello there,");
+            bufferedWriter.write(" here is some text.");
+            bufferedWriter.newLine();
+            bufferedWriter.write("We are writing");
+            bufferedWriter.write(" the text to the file.");
+             */
+            // Always close files.
+        } //double con suma
     }
     
    public static void reading() throws IOException{
