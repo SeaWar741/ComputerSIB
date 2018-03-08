@@ -5,12 +5,14 @@
  */
 package shoppingcart;
 
+import java.awt.Desktop;
 import static java.lang.Integer.parseInt;
 import java.util.*;
 import static java.util.Objects.hash;
 import static javax.script.ScriptEngine.FILENAME;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -233,7 +235,7 @@ public class Shoppingcart {
         System.out.println();
     }
     
-    public static void selection_menu(String[][] elements) throws InterruptedException, FileNotFoundException, UnsupportedEncodingException{ //funcion para la seleccion del usuario
+    public static void selection_menu(String[][] elements) throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para la seleccion del usuario
         Scanner keyboard = new Scanner(System.in);//inicializacion del scanner
         System.out.println("Selecionar una opcion del menu");
         System.out.print(promt);
@@ -437,7 +439,7 @@ public class Shoppingcart {
         System.out.println(total_cost);//se imprime el total(con descuento
     }
     
-    public static void checkout() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException{ //funcion para el checkout
+    public static void checkout() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para el checkout
         //code
         if(shopping_kart_items == null){ //si el carro no tiene nada entonces se imprime que la cuenta esta en 0 y se cierra el programa
             System.out.println("cuenta en: $0");
@@ -451,6 +453,12 @@ public class Shoppingcart {
             writting();
             System.out.println("Pago validado, Gracias Por su compra");
             System.out.println();
+            Runtime rt=Runtime.getRuntime();
+            String file = "Ticket.txt";
+            //Process p=rt.exec("notepad " +file);
+            //Runtime.getRuntime().exec("cmd /c start print.bat");
+            File file2 = new File("print.bat");
+            Desktop.getDesktop().open(file2);
             exit();//se cierra el programa
         }
         
@@ -563,7 +571,7 @@ public class Shoppingcart {
             writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
             writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
             writer.println("| 	    2 5 4 5 5 6 4 4 6 2 4 6 8 4  55 5          |");
-            
+            writer.close();
             /*
             bufferedWriter.write("Hello there,");
             bufferedWriter.write(" here is some text.");
