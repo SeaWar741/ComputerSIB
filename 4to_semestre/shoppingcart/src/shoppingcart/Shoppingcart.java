@@ -38,7 +38,7 @@ public class Shoppingcart {
     private static HashMap<String, String> hmap = new HashMap<>();
     private static HashMap<String,String> security = new HashMap<>();
     private static final String FILENAME = "users.txt";
-    public static String[][] elements = new String[6][10]; 
+    public static String[][] elements = new String[6][10];
     public static String total_cost;
     public static String subtotal_cost;
     private static String us;
@@ -88,7 +88,7 @@ public class Shoppingcart {
         /**/
         
         //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
-        String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
+        /*String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
             {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
             {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
             {"5","Chocolate","comida","50","10","5"},{"6","Refesco","comida","50","10","5"},
@@ -103,6 +103,7 @@ public class Shoppingcart {
             boolean login = login_permission(hmap,security);
             if(login == true){
                 loading_animation();
+                reading_products();
                 //insert the rest of the code
                 selection_menu_display();
                 selection_menu(elements);
@@ -455,11 +456,11 @@ public class Shoppingcart {
             System.out.println();
             Runtime rt=Runtime.getRuntime();
             String file = "Ticket.txt";
-            //Process p=rt.exec("notepad " +file);
-            //Runtime.getRuntime().exec("cmd /c start print.bat");
-            File file2 = new File("print.bat");
-            Desktop.getDesktop().open(file2);
-            exit();//se cierra el programa
+            Process p=rt.exec("notepad " +file);
+            Runtime.getRuntime().exec("cmd /c start print.bat");
+            //File file2 = new File("print.bat");
+            //Desktop.getDesktop().open(file2);
+            //exit();//se cierra el programa
         }
         
     }
@@ -597,6 +598,19 @@ public class Shoppingcart {
             }
         }
     }
+   
+   
+   public static void reading_products() throws IOException{
+       String file = "productos.txt";
+       try(BufferedReader br = new BufferedReader(new FileReader(file))){
+           String sCurrentLine;
+           int i = 0;
+           while((sCurrentLine = br.readLine()) != null && !"".equals(sCurrentLine = br.readLine())) {
+              elements[i] = sCurrentLine.split(",");
+              i++;
+           }
+       }
+   }
     
     public static void user_register(String user, String pass, String sec_a){
         pass = encrypt(pass);
