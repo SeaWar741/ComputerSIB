@@ -1,4 +1,4 @@
-require 'sqlite3'
+require 'sql'
 
 class Kukulkan
 def initialize (id,user,password,security_answer)
@@ -107,7 +107,7 @@ def self.delete(value)
   private
 
   def self.db
-    @@db ||= SQLite3::Database.new("kukulkan_database.sqlite3")
+    @@db ||= SQL::Database.new("kukulkan_database.sql")
   end
 
 end

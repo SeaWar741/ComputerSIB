@@ -6,6 +6,7 @@
 package shoppingcart;
 
 import java.awt.Desktop;
+import java.io.BufferedInputStream;
 import static java.lang.Integer.parseInt;
 import java.util.*;
 import static java.util.Objects.hash;
@@ -13,10 +14,12 @@ import static javax.script.ScriptEngine.FILENAME;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
@@ -97,7 +100,9 @@ public class Shoppingcart {
         };
         /**/
         reading();
+        reading_products();
         /*inicio código*/
+        /*
         boolean run = true;
         while(run = true){
             boolean login = login_permission(hmap,security);
@@ -605,16 +610,65 @@ public class Shoppingcart {
        try(BufferedReader br = new BufferedReader(new FileReader(file))){
            String sCurrentLine;
            int i = 0;
-           while((sCurrentLine = br.readLine()) != null && !"".equals(sCurrentLine = br.readLine())) {
-              elements[i] = sCurrentLine.split(",");
-              i++;
+           while((sCurrentLine = br.readLine()) != null) { 
+            String[] product = new String[6];
+            product = sCurrentLine.split(",");
+            String id = product[0];
+            String name = product[1];
+            String cat = product[2];
+            String price = product[3];
+            String discount = product[4];
+            String rating = product[5];
+            for(int j= 0; j< 10;i++){
+                for(i = 0;i<6;i++){
+                    elements[i];//hacer que se inserte para cada array, en cada indice
+                }
+            }
            }
-       }
+        }
    }
+   
+   /*
+    for (int r=0; r<shades.length; r++) {
+     for (int c=0; c<shades[r].length; c++) {
+         shades[r][c]="hello";//your value
+     }
+ }
+   */
     
     public static void user_register(String user, String pass, String sec_a){
         pass = encrypt(pass);
         sec_a = encrypt(pass);
         
+    }
+    
+    public static void printGrid(String[][] a, String file) throws IOException
+    {
+       for(int i = 0; i < countLines(file); i++)
+       {
+          for(int j = 0; j < 5; j++)
+          {
+             System.out.printf(a[i][j]);
+          }
+          System.out.println();
+       }
+    }
+
+    public static int countLines(String filename) throws IOException {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(filename))) {
+            byte[] c = new byte[1024];
+            int count = 0;
+            int readChars = 0;
+            boolean empty = true;
+            while ((readChars = is.read(c)) != -1) {
+                empty = false;
+                for (int i = 0; i < readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+            }
+            return (count == 0 && !empty) ? 1 : count;
+        }
     }
 }
