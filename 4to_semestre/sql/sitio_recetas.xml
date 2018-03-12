@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://ondras.zarovi.cz/sql/demo/?keyword=default -->
+<sql>
+<datatypes db="mysql">
+	<group color="rgb(238,238,170)" label="Number">
+		<type label="NUMERIC" quote="" sql="DECIMAL" length="0" re="INT"/>
+		<type label="NUMBER" quote="" sql="DECIMAL" length="0" re="INT"/>
+		<type label="Decimal" quote="" sql="DECIMAL" length="1" re="DEC"/>
+		<type label="Single precision" quote="" sql="FLOAT" length="0"/>
+		<type label="Double precision" quote="" sql="DOUBLE" length="0" re="DOUBLE"/>
+	</group>
+
+	<group color="rgb(255,200,200)" label="Character">
+		<type label="Char" quote="'" sql="CHAR" length="1"/>
+		<type label="NCHAR" quote="'" sql="NCHAR" length="1"/>
+		<type label="Varchar2" quote="'" sql="VARCHAR2" length="1"/>
+		<type label="CLOB" quote="'" sql="MEDIUMTEXT" length="0" re="TEXT"/>
+		<type label="Binary" quote="'" sql="BINARY" length="1"/>
+		<type label="Varbinary" quote="'" sql="VARBINARY" length="1"/>
+		<type label="BLOB" quote="'" sql="BLOB" length="0" re="BLOB"/>
+	</group>
+
+	<group color="rgb(200,255,200)" label="Date &amp; Time">
+		<type label="Date" quote="'" sql="DATE" length="0"/>
+		<type label="Timestamp" quote="'" sql="TIMESTAMP" length="0"/>
+	</group>
+	
+	<group color="rgb(200,200,255)" label="Miscellaneous">
+		<type label="ENUM" quote="" sql="ENUM" length="1"/>
+		<type label="SET" quote="" sql="SET" length="1"/>
+	</group>
+</datatypes><table x="247" y="170" name="chef">
+<row name="id" null="1" autoincrement="1">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="553" y="172" name="meal">
+<row name="id" null="1" autoincrement="1">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="id_chef" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default><relation table="chef" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="942" y="164" name="ingredients">
+<row name="id" null="1" autoincrement="1">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="quantity" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="718" y="334" name="meal-ingredient">
+<row name="id" null="1" autoincrement="1">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="id_meal" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default><relation table="meal" row="id" />
+</row>
+<row name="id_ingredients" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default><relation table="ingredients" row="id" />
+</row>
+<row name="meassurment" null="1" autoincrement="0">
+<datatype>VARCHAR2</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+</sql>

@@ -621,12 +621,15 @@ public class Shoppingcart {
             String rating = product[5];
             for(int j= 0; j< 10;i++){
                 for(i = 0;i<6;i++){
-                    elements[i];//hacer que se inserte para cada array, en cada indice
+                    elements[i] = {id,name,cat,price,discount,rating};
                 }
             }
            }
+           
         }
    }
+   
+   
    
    /*
     for (int r=0; r<shades.length; r++) {
