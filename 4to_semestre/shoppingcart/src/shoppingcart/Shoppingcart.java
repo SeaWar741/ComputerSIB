@@ -99,10 +99,17 @@ public class Shoppingcart {
             {"9","Gummy","comida","50","10","5"}
         };
         /**/
+        String[][] elements = { {"","","","","",""}, 
+            {"","","","","",""},{"","","","","",""},
+            {"","","","","",""},{"","","","","",""},
+            {"","","","","",""},{"","","","","",""},
+            {"","","","","",""},{"","","","","",""},
+            {"","","","","",""}
+        };        
         reading();
         reading_products();
         /*inicio código*/
-        /*
+        
         boolean run = true;
         while(run = true){
             boolean login = login_permission(hmap,security);
@@ -611,21 +618,18 @@ public class Shoppingcart {
            String sCurrentLine;
            int i = 0;
            while((sCurrentLine = br.readLine()) != null) { 
-            String[] product = new String[6];
-            product = sCurrentLine.split(",");
-            String id = product[0];
-            String name = product[1];
-            String cat = product[2];
-            String price = product[3];
-            String discount = product[4];
-            String rating = product[5];
-            for(int j= 0; j< 10;i++){
+                String[] product = new String[6];
+                product = sCurrentLine.split(",");
+                String id = product[0];
+                String name = product[1];
+                String cat = product[2];
+                String price = product[3];
+                String discount = product[4];
+                String rating = product[5];
                 for(i = 0;i<6;i++){
-                    elements[i] = {id,name,cat,price,discount,rating};
+                    elements[i] = product;
                 }
-            }
-           }
-           
+           }   
         }
    }
    
