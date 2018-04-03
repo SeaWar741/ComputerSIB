@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import static java.lang.Thread.sleep;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class Shoppingcart {
     //class constants
     public static Set<String> category_1 = new TreeSet<>();
     public static Set<String> category_2 = new TreeSet<>();
+    public static Set<String> category_default = new TreeSet<>();
     public static ArrayList<String> shopping_kart_items = new ArrayList<String>();
     public static ArrayList<Integer> shopping_kart_money_original = new ArrayList<Integer>();
     public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
@@ -49,9 +51,10 @@ public class Shoppingcart {
     public static void main(String[] args) throws InterruptedException, IOException {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true; Metodo necesita perfeccionamiento
         Scanner keyboard = new Scanner(System.in);
+        
         //Solucion temporal, pasar a un archivo .txt encriptado(contraseñas y usuarios) con la api de dropbox
+        
         /*database for user & passwords*/
-        //HashMap<String, String> hmap = new HashMap<>();
             /* cuentas con contraseñas reales sin encriptar
             hmap.put("Theyought47@einrot.com","a01652138");
             hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
@@ -60,15 +63,8 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
             hmap.put("matheo@pinzon.com.mx","matheo123");
-            //encriptado
-            hmap.put("Theyought47@einrot.com","efb6aacbde32d26bff954cfed9ffe3372104cf18");
-            hmap.put("wcena201@ndfbmail.ga","2e07125d0b7b6ea94cad1723649137215ab09d10");
-            hmap.put("0syed.sab@pokeett.site","22fa9a71b6eaf5ad83d6038f33491728982856d7");
-            hmap.put("oali.qasem@miur.ml","cf2bb7ec965f090f8e48304860e2f629c0f8a99f");
-            hmap.put("idigao.pga@888z5.ml","fa26e6e06ac77d53c3a0e4092af149a711c61b82");
-            hmap.put("juanca741@gmail.com","c938af029a1986d6efe956ccd05dd43989b71312");
-            hmap.put("matheo@pinzon.com.mx","ca9a6d03683cc471a1ef5817022d6c487e51f558");            
-        /**/
+        */            
+        
         /*database for users & security answer*/
         //Base de datos con preguntas sin encriptar
         /*HashMap<String,String> security = new HashMap<>();
@@ -79,26 +75,9 @@ public class Shoppingcart {
             security.put("idigao.pga@888z5.ml","choli");
             security.put("juanca741@gmail.com","olita");
             security.put("matheo@pinzon.com.mx","charlott");
-        /
-        HashMap<String,String> security = new HashMap<>();
-            security.put("Theyought47@einrot.com","17765ffe166b72d80a602ba7daaf1029c582f531");
-            security.put("wcena201@ndfbmail.ga","8fdc441e668daf84f902d1dfc8de089a9579f548");
-            security.put("0syed.sab@pokeett.site","0fbda0462c9539b02f0498148e0ab135031cdaa8");
-            security.put("oali.qasem@miur.ml","525b752f115f4d0790fff75b07aaa3e0897832a5");
-            security.put("idigao.pga@888z5.ml","c50a2b3c108227acaf199be912f963ae88e32a23");
-            security.put("juanca741@gmail.com","1e54b98763365a39b9041b49e8b3fce4b5e4dcb2");
-            security.put("matheo@pinzon.com.mx","charlott");
-        /**/
+        */
         
-        //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
-        /*String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
-            {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
-            {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
-            {"5","Chocolate","comida","50","10","5"},{"6","Refesco","comida","50","10","5"},
-            {"7","Sabritones","comida","50","10","5"},{"8","Chicles clorent","comida","50","10","5"},
-            {"9","Gummy","comida","50","10","5"}
-        };
-        /**/
+        /* Implementacion con txt ( a remover y sustituir por sqlite)
         String[][] elements = { {"","","","","",""}, 
             {"","","","","",""},{"","","","","",""},
             {"","","","","",""},{"","","","","",""},
@@ -108,15 +87,49 @@ public class Shoppingcart {
         };        
         reading();
         reading_products();
-        /*inicio código*/
+        */        
         
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+        //Usuarios con contraseñas(encriptadas)
+        HashMap<String, String> hmap = new HashMap<>();
+            hmap.put("Theyought47@einrot.com","efb6aacbde32d26bff954cfed9ffe3372104cf18");
+            hmap.put("wcena201@ndfbmail.ga","2e07125d0b7b6ea94cad1723649137215ab09d10");
+            hmap.put("0syed.sab@pokeett.site","22fa9a71b6eaf5ad83d6038f33491728982856d7");
+            hmap.put("oali.qasem@miur.ml","cf2bb7ec965f090f8e48304860e2f629c0f8a99f");
+            hmap.put("idigao.pga@888z5.ml","fa26e6e06ac77d53c3a0e4092af149a711c61b82");
+            hmap.put("juanca741@gmail.com","c938af029a1986d6efe956ccd05dd43989b71312");
+            hmap.put("matheo@pinzon.com.mx","ca9a6d03683cc471a1ef5817022d6c487e51f558");
+        
+        //Lista de usuarios con respuesta de pregunta de seguridad (encriptada)
+        HashMap<String,String> security = new HashMap<>();
+            security.put("Theyought47@einrot.com","17765ffe166b72d80a602ba7daaf1029c582f531");
+            security.put("wcena201@ndfbmail.ga","8fdc441e668daf84f902d1dfc8de089a9579f548");
+            security.put("0syed.sab@pokeett.site","0fbda0462c9539b02f0498148e0ab135031cdaa8");
+            security.put("oali.qasem@miur.ml","525b752f115f4d0790fff75b07aaa3e0897832a5");
+            security.put("idigao.pga@888z5.ml","c50a2b3c108227acaf199be912f963ae88e32a23");
+            security.put("juanca741@gmail.com","1e54b98763365a39b9041b49e8b3fce4b5e4dcb2");
+            security.put("matheo@pinzon.com.mx","dffe14fb6a431eeb9f40cd0f8df7deb68f8eeac8");
+        
+        //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
+        String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
+            {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
+            {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
+            {"5","Chocolate","comida","50","10","5"},{"6","Refresco","comida","50","10","5"},
+            {"7","Sabritones","comida","50","10","5"},{"8","Chicles","comida","50","10","5"},
+            {"9","Gummy","comida","50","10","5"}
+        };
+        
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+//inicio código
+        welcome();
         boolean run = true;
         while(run = true){
             boolean login = login_permission(hmap,security);
             if(login == true){
-                loading_animation();
+                //loading_animation();
                 reading_products();
-                //insert the rest of the code
                 selection_menu_display();
                 selection_menu(elements);
             }
@@ -132,7 +145,10 @@ public class Shoppingcart {
         /*fin del codigo*/
     }
     
-    //funciones del código
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+//funciones del código
+    
     public static void welcome_menu_selection(){ //funcion de inicio, aun no esta completada, falta hacer el registro, implementar hasta 3er parcial
         Scanner keyboard = new Scanner(System.in);
         boolean loop_do = true;
@@ -192,8 +208,10 @@ public class Shoppingcart {
             case "y": //si escribe y
                 System.out.println();
                 System.out.println("Ingresar usuario"); //se pide que ingrese su usuario
+                System.out.print(promt);
                 String user = keyboard.nextLine();
                 System.out.println("¿Cuál es el nombre de tu mascota?");//se pide que ingrese el nombre de su mascota
+                System.out.print(promt);
                 String user_answer = keyboard.nextLine();
                 String u_a = encrypt(user_answer); //el string u_a es igual al resultado de encriptar la respuesta del usuario
                 if(u_a.equals(answers.get(user))){ //si la respuesta de seguridad es igual a lo que escribio el usuario entonces se cambia la contraseña
@@ -212,6 +230,7 @@ public class Shoppingcart {
                 }   break;
             case "n": //si no se quiere cambiar la contraseña entonces se dice que esta entendido
                 System.out.println("Entendido");
+                exit();
                 break;
             default: //en caso de que no escriba y o n se pude que escriba un valor valido
                 System.out.println("Ingresar valor valido");
@@ -309,8 +328,11 @@ public class Shoppingcart {
         int count = 0;//variable para contador
         int x=0;//variable para el indice cambiante
         System.out.println();
-        System.out.println(category.get(0)); //se imprime la categoria 1
-        System.out.println("---------------------------------------------------------------");
+        System.out.println("|-------------------------------------------------------------|");
+        System.out.println("|               PRODUCTOS DISPONIBLES EN TIENDA:              |");
+        System.out.println("|-------------------------------------------------------------|");
+        System.out.println(" ["+capitalize(category.get(0))+"]:"); //se imprime la categoria 1
+        System.out.println(" ------------------------------------------------------------- ");
         while(count <9){//mientras que el contador sea menor a nueve entonces se hara lo siguiente
             if(array[x][2].equals(category.get(0))){//se hace busqueda , iterando por cada indice 2 en la segunda dimension, si es igual a la categoria 1, entonces se añadira el producto a esa categoria
                 category_1.add("|"+array[x][1]+ ":  $" +array[x][3]+ "   |Descuento del " +array[x][4]+ "% |Rating: " +array[x][5]+ "| ID: " +array[x][0]+"|");//formato para añadir a la categoria
@@ -320,13 +342,13 @@ public class Shoppingcart {
         }
         category_1.forEach((item) -> { //se imprime cada elemento de la categoria 1
             System.out.println(item);
-            System.out.println("---------------------------------------------------------------");
+            System.out.println("|-------------------------------------------------------------|");
         });
         x = 0; //se reestablece el valor de x y de count a 0
         count = 0;
         System.out.println();
-        System.out.println(category.get(1));//se imprime la categoria 2
-        System.out.println("---------------------------------------------------------------");
+        System.out.println(" ["+capitalize(category.get(1))+"]:");//se imprime la categoria 2
+        System.out.println(" ------------------------------------------------------------- ");
         while(count<9){//mientras que el contador sea menor a nueve entonces se hara lo siguiente
             if(array[x][2].equals(category.get(1))){//se hace busqueda , iterando por cada indice 2 en la segunda dimension, si es igual a la categoria 1, entonces se añadira el producto a esa categoria
                 category_2.add("|"+array[x][1]+ ":  $" +array[x][3]+ "   |Descuento del " +array[x][4]+ "% |Rating: " +array[x][5]+ "| ID: " +array[x][0]+"|");//formato para añadir a la categoria
@@ -336,17 +358,19 @@ public class Shoppingcart {
         }
         category_2.forEach((item) -> {//se imprime cada elemento de la categoria 2
             System.out.println(item);
-            System.out.println("---------------------------------------------------------------");
+            System.out.println("|-------------------------------------------------------------|");
         });
     }
     
     public static void adding_to(String[][] array){//funcion para añadir productos al carrito
         Scanner keyboard = new Scanner(System.in);//inicializacion del scanner
         Scanner key = new Scanner(System.in);
+        boolean valid_product = true;
         boolean repetition = false;//variable repeticion establecida en false
         while(repetition == false){ //mientras que la repeticion este en false entonces se hace el loop
             System.out.println("Desea agregar algun producto?");//se pregunta si se quiere añadir un producto
             System.out.println("y/n");
+            System.out.print(promt);
             String selection = keyboard.nextLine();//ingresa valor
             int counter = 0; //variable pára contador 1
             int count = 0;//variable para contador 2
@@ -354,18 +378,22 @@ public class Shoppingcart {
             switch (selection.toLowerCase()) {//se hace el switch con lo que el usuario ingreso en minusculas
                 case "y": //caso y
                     System.out.println("Ingresar ID del producto a añadir");
+                    System.out.print(promt);
                     String product = keyboard.nextLine(); //ingresar el id del producto a añadir
                     System.out.println("Ingresar la cantidad a añadir"); //ingresar cantidad de productos
+                    System.out.print(promt);
                     int times = key.nextInt();
                     while(count<9){//mientras que el count sea menor a nueve entonces realizar operacion
                         if(array[x][0].equals(product)){ //si i en el indice 0 es igual al producto entonces
                             for(int i = 0; i<times;i++){//añadir los productos al carrito la cantidad de veces que se ingreso
                                 shopping_kart_items.add(array[x][1]);
+                                valid_product = true;
                             }
                         }
                         x++; //aumentar el valor de x y count en 1
                         count++;
                     }
+
                     x = 0; //reestableceer el valor de x a 0
                     while(counter < 9){ //mientras que le contador sea menor a nueve entonces realizar operacion
                         if(array[x][0].equals(product)){ //si i en el indice 0 es igual al producto entonces
@@ -375,15 +403,27 @@ public class Shoppingcart {
                             for(int i = 0; i<times;i++){ //ingresar el costo de cada producto en el carrito, junto con su descuento
                                 shopping_kart_money_original.add(price_int);//se añade a el costo original del producto
                                 price_discount(shopping_kart_money, price, discount);//se añade el precio ya con el descuento
+                                valid_product = true;
+                                counter = 9;
                             }
+                        }
+                        else{
+                            valid_product = false;
                         }
                         x ++; //se aumenta el valor de x y de counter +1
                         counter ++;
                     }
+                    if(valid_product == false){
+                        System.out.println("");
+                        System.out.println("Producto no valido, ingresar otro ID");
+                    } 
                     System.out.println("");
-                    System.out.println("Productos seleccionados: " +shopping_kart_items);//imprimir lista de productos seleccionados, el subtotal y el total
+                    /*System.out.println("Productos seleccionados: " +shopping_kart_items);//imprimir lista de productos seleccionados, el subtotal y el total
                     System.out.println("Subtotal de productos seleccionados" + shopping_kart_money_original);
                     System.out.println("Total de los productos seleccionados: "+shopping_kart_money);
+                    */
+                    display_kart();
+                    System.out.println("");
                     break;
                 case "n": //en caso de que no se desee agregar, entonces se rompe el loop
                     repetition = true;
@@ -404,6 +444,7 @@ public class Shoppingcart {
         String delete_in_product = keyboard.nextLine(); //ingresar el nombre
         String delete_product = capitalize(delete_in_product); //se le pone la primer letra como mayuscula
         System.out.println("Ingresar la cantidad de producto a eliminar");
+        System.out.print(promt);
         int quantity = key.nextInt();
         int count = 0; //counter en o
         int x = 0; //x en 0
@@ -414,6 +455,7 @@ public class Shoppingcart {
                     shopping_kart_items.remove(delete_product);//se elimina de los items
                     shopping_kart_money_original.remove(delete_product_index);//se elimina del original
                     shopping_kart_money.remove(delete_product_index);//se elimina del descuento
+                    System.out.println("Producto eliminado");
             }
         }
         else{
@@ -469,16 +511,24 @@ public class Shoppingcart {
             Runtime rt=Runtime.getRuntime();
             String file = "Ticket.txt";
             Process p=rt.exec("notepad " +file);
-            Runtime.getRuntime().exec("cmd /c start print.bat");
+            //Runtime.getRuntime().exec("cmd /c start print.bat");
             //File file2 = new File("print.bat");
             //Desktop.getDesktop().open(file2);
-            //exit();//se cierra el programa
+            exit();//se cierra el programa
         }
         
     }
     
+    public static void welcome(){
+        System.out.println("");
+        System.out.println("            Bienvenido a Kukulkan           ");
+        System.out.println("--------------------------------------------");
+        System.out.println("");
+    }
     
-    //funciones complementarias
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*    
+    
+//funciones complementarias
     public static String capitalize(String text){ //funcion para hacer la primer letra de un strin a mayuscula
     String c = (text != null)? text.trim() : "";
     String[] words = c.split(" ");
@@ -506,12 +556,15 @@ public class Shoppingcart {
     public static void loading_animation() throws InterruptedException{ //funcion para animacion de loading
         for(int i=0; i<9;i++){
             System.out.print("*"); //animacion apagada para las pruebas, eliminar de comentarios para entrega final
-            //sleep(250);
+            sleep(250);
         }
         System.out.println();
     }
     
-    //encriptado de datos
+    
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    
+//encriptado de datos
     public static String encrypt(String txt) { //funcion para encriptar
         String encrypted = getHash(algorithmencrypt(txt),"Sha1"); //se pasa a hash el string, con el metodo de encriptado sha1
         return encrypted; //regresa el string encriptado
@@ -537,7 +590,11 @@ public class Shoppingcart {
         return null;
     }
     
-    //escritura en txt
+    
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    
+//escritura en txt
+    
     public static void writting() throws FileNotFoundException, UnsupportedEncodingException{
         try (PrintWriter writer = new PrintWriter("Ticket.txt")) {
             double sum = 0; //double con suma
@@ -596,7 +653,7 @@ public class Shoppingcart {
         } //double con suma
     }
     
-   public static void reading() throws IOException{
+    public static void reading() throws IOException{
 	try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null && !"".equals(sCurrentLine = br.readLine())) { // se hara una lectura, añadiendo la cdontraseña, usuario y respuesta a pregunta de seguridad dentro de dos hash(security y hmap)
@@ -612,7 +669,7 @@ public class Shoppingcart {
     }
    
    
-   public static void reading_products() throws IOException{
+    public static void reading_products() throws IOException{
        String file = "productos.txt";
        try(BufferedReader br = new BufferedReader(new FileReader(file))){
            String sCurrentLine;
@@ -635,13 +692,13 @@ public class Shoppingcart {
    
    
    
-   /*
-    for (int r=0; r<shades.length; r++) {
-     for (int c=0; c<shades[r].length; c++) {
-         shades[r][c]="hello";//your value
-     }
- }
-   */
+    /*
+        for (int r=0; r<shades.length; r++) {
+        for (int c=0; c<shades[r].length; c++) {
+            shades[r][c]="hello";//your value
+        }
+    }
+    */
     
     public static void user_register(String user, String pass, String sec_a){
         pass = encrypt(pass);
@@ -649,8 +706,7 @@ public class Shoppingcart {
         
     }
     
-    public static void printGrid(String[][] a, String file) throws IOException
-    {
+    public static void printGrid(String[][] a, String file) throws IOException{
        for(int i = 0; i < countLines(file); i++)
        {
           for(int j = 0; j < 5; j++)
@@ -678,4 +734,7 @@ public class Shoppingcart {
             return (count == 0 && !empty) ? 1 : count;
         }
     }
+    
+//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    
 }

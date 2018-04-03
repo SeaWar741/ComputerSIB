@@ -7,17 +7,17 @@
 [Usuario]: juanca741@gmail.com
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-[Fecha(dd/mm/yr)]: Wed Mar 07 20:47:09 CST 2018
+[Fecha(dd/mm/yr)]: Mon Apr 02 22:22:55 CDT 2018
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-Producto: Deshodorante, cantidad: 10
-Producto: Chicles clorent, cantidad: 2
-Producto: Sabritones, cantidad: 1
+Producto: Chicles, cantidad: 10
+Producto: Refresco, cantidad: 4
+Producto: Jabon, cantidad: 20066
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-El Subtotal de la cuenta es de $600.0
-Total de la cuenta es de $540.0
+El Subtotal de la cuenta es de $1003950.0
+Total de la cuenta es de $903555.0
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 		   Gracias por su compra

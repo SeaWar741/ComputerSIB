@@ -15,7 +15,7 @@ public class Sqlite_test {
      * @param args the command line arguments
      */
   public static void main( String args[] ) {
-      select();
+      create();
   }
   
   public static void create() {
@@ -24,7 +24,7 @@ public class Sqlite_test {
       
       try {
          Class.forName("org.sqlite.JDBC");
-         c = DriverManager.getConnection("jdbc:sqlite:test.db");
+         c = DriverManager.getConnection("jdbc:sqlite:Products.db");
          System.out.println("Opened database successfully");
 
          stmt = c.createStatement();
