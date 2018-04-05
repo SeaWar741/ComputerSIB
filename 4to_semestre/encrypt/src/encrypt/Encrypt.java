@@ -17,9 +17,14 @@ public class Encrypt {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(getHash(algorithmencrypt("choli"),"Sha1"));
-        String hola = getHash(algorithmencrypt("charlott"),"Sha1");
+        System.out.println(getHash(algorithmencrypt("password"),"Sha1"));
+        String hola = getHash(algorithmencrypt("informatica"),"Sha1");
         System.out.println(hola);
+    }
+    
+    public static String encryption(String txt){
+        String encrypted = getHash(algorithmencrypt(txt),"Sha1");
+        return encrypted;
     }
     
     public static String algorithmencrypt(String txt){
@@ -27,7 +32,7 @@ public class Encrypt {
         return password;
     }
     
-    public static String getHash(String txt, String hashType){
+    private static String getHash(String txt, String hashType){
         try{
             java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
             byte[] array = md.digest(txt.getBytes());

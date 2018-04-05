@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static shoppingcart.sqlite_connection.login_sql;
 
 
 public class Shoppingcart {
@@ -46,7 +47,7 @@ public class Shoppingcart {
     public static String[][] elements = new String[6][10];
     public static String total_cost;
     public static String subtotal_cost;
-    private static String us;
+    public static String us;
     //end class constants
     public static void main(String[] args) throws InterruptedException, IOException {
         //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true; Metodo necesita perfeccionamiento
@@ -63,6 +64,7 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
             hmap.put("juanca741@gmail.com","juanca741");
             hmap.put("matheo@pinzon.com.mx","matheo123");
+            hmap.put("vicente.nunez@itesm.mx","password");
         */            
         
         /*database for users & security answer*/
@@ -75,6 +77,8 @@ public class Shoppingcart {
             security.put("idigao.pga@888z5.ml","choli");
             security.put("juanca741@gmail.com","olita");
             security.put("matheo@pinzon.com.mx","charlott");
+            hmap.put("vicente.nunez@itesm.mx","informatica");
+        
         */
         
         /* Implementacion con txt ( a remover y sustituir por sqlite)
@@ -100,6 +104,7 @@ public class Shoppingcart {
             hmap.put("idigao.pga@888z5.ml","fa26e6e06ac77d53c3a0e4092af149a711c61b82");
             hmap.put("juanca741@gmail.com","c938af029a1986d6efe956ccd05dd43989b71312");
             hmap.put("matheo@pinzon.com.mx","ca9a6d03683cc471a1ef5817022d6c487e51f558");
+            hmap.put("vicente.nunez@itesm.mx","03e03fad39ff223e6148ff1c9d794678ab082f52");
         
         //Lista de usuarios con respuesta de pregunta de seguridad (encriptada)
         HashMap<String,String> security = new HashMap<>();
@@ -110,6 +115,7 @@ public class Shoppingcart {
             security.put("idigao.pga@888z5.ml","c50a2b3c108227acaf199be912f963ae88e32a23");
             security.put("juanca741@gmail.com","1e54b98763365a39b9041b49e8b3fce4b5e4dcb2");
             security.put("matheo@pinzon.com.mx","dffe14fb6a431eeb9f40cd0f8df7deb68f8eeac8");
+            security.put("vicente.nunez@itesm.mx","90b9d6bfd48b513e2df53b77e4ccb09d7de82f0e");
         
         //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
         String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
@@ -126,7 +132,7 @@ public class Shoppingcart {
         welcome();
         boolean run = true;
         while(run = true){
-            boolean login = login_permission(hmap,security);
+            boolean login = login_sql();
             if(login == true){
                 //loading_animation();
                 reading_products();
@@ -276,7 +282,7 @@ public class Shoppingcart {
         while(loop_continue == true){//este loop se continuara mientras el usuario no haga el pago o haga una salida forzada
             switch (selection) {
                 case 1: //caso uno es igual a 
-                    Sorting_Array(elements);//<--- Imprimir la lista de productos categorizados y por orden alfabetico
+                    sqlite_connection.print_products();//<--- Imprimir la lista de productos categorizados y por orden alfabetico
                     break;
                 case 2://caso dos es igual a añadir productos al carrito de compras
                     adding_to(elements);//metodo adding_to con elments(carrito)
@@ -368,8 +374,7 @@ public class Shoppingcart {
         boolean valid_product = true;
         boolean repetition = false;//variable repeticion establecida en false
         while(repetition == false){ //mientras que la repeticion este en false entonces se hace el loop
-            System.out.println("Desea agregar algun producto?");//se pregunta si se quiere añadir un producto
-            System.out.println("y/n");
+            System.out.println("Desea agregar algun producto? y/n");//se pregunta si se quiere añadir un producto
             System.out.print(promt);
             String selection = keyboard.nextLine();//ingresa valor
             int counter = 0; //variable pára contador 1

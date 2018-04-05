@@ -13,12 +13,17 @@ import static java.util.Objects.hash;
  */
 public class encryption {
     
+    public static String encryption(String txt){
+        String encrypted = getHash(algorithmencrypt(txt),"Sha1");
+        return encrypted;
+    }
+    
     public static String algorithmencrypt(String txt){
         String password = String.valueOf(hash(txt + "seawar741seawar741"));
         return password;
     }
     
-    public static String getHash(String txt, String hashType){
+    private static String getHash(String txt, String hashType){
         try{
             java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
             byte[] array = md.digest(txt.getBytes());
@@ -32,10 +37,4 @@ public class encryption {
         }
         return null;
     }
-    
-    public encryption(String txt){
-        txt = algorithmencrypt(txt);
-        System.out.println(txt);
-    }
-
 }
