@@ -52,9 +52,10 @@ public class sqlite_connection {
       System.out.println("Table created successfully");
    }
   
-  public static void create_user() {
+  public static void create_users() {
       Connection c = null;
       Statement stmt = null;
+
       
       try {
          Class.forName("org.sqlite.JDBC");
@@ -80,27 +81,89 @@ public class sqlite_connection {
   public static void insert_users_initial(){ 
    Connection c = null;
       Statement stmt = null;
+      Scanner keyboard = new Scanner(System.in);
+      Scanner keyboard2 = new Scanner(System.in);
+      Scanner keyboard3 = new Scanner(System.in);
+      Scanner keyboard4 = new Scanner(System.in);
       
-      try {
-         Class.forName("org.sqlite.JDBC");
-         c = DriverManager.getConnection("jdbc:sqlite:Users.db");
-         c.setAutoCommit(false);
-         System.out.println("Opened database successfully");
+      System.out.println("Ingresar Usuario:");
+      String user = keyboard.nextLine();
+      //checar si existe el usuario en la base de datos
+      boolean exists = exists(user);
+      if(exists == false){
+          System.out.println("Ingresar contraseña");
+          System.out.print(promt);
+          String password = keyboard2.nextLine();
+          System.out.println("Confirmar contraseña");
+          System.out.print(promt);
+          String password2 = keyboard2.nextLine();
+          if(password.equals(password2)){
+              System.out.println("Ingresar respuesta de seguridad. Cuál es el nombre de tu mascota? (esta respuesta no es modificable)");
+              System.out.println(promt);
+              String security = keyboard3.nextLine();
+              System.out.println("Confirmar respuesta de seguridad");
+              System.out.print(promt);
+              String security2 = keyboard4.nextLine();
+              if(security.equals(security2)){
+                  try {
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:Users.db");
+                c.setAutoCommit(false);
+                System.out.println("Opened database successfully");
 
-         stmt = c.createStatement();
-         String sql = "INSERT INTO USUARIOS (ID,USER,PASSWORD,SECURITY) " +
-                        "VALUES (1,'juanca741@gmail.com','"+encryption("juanca741")+"','"+encryption("olita")+"');"; 
-         stmt.executeUpdate(sql);
-         
-         stmt.close();
-         c.commit();
-         c.close();
-      } catch ( Exception e ) {
-         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-         System.exit(0);
+                stmt = c.createStatement();
+                String sql = "INSERT INTO USUARIOS (USER,PASSWORD,SECURITY) " +
+                               "VALUES ('"+user+"','"+encryption(password)+"','"+encryption(security)+"');"; 
+                stmt.executeUpdate(sql);
+
+                stmt.close();
+                c.commit();
+                c.close();
+                } catch ( Exception e ) {
+                   System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                   System.exit(0);
+                }
+                System.out.println("Usuario registrado satisfactoriamente");
+             }
+          }
       }
-      System.out.println("Records created successfully");
+     
    }
+  
+  public static boolean exists(String user){
+   Connection c = null;
+   Statement stmt = null;
+   int exist = 0;
+   int contin = 0;
+           try {
+           Class.forName("org.sqlite.JDBC");
+           c = DriverManager.getConnection("jdbc:sqlite:Users.db");
+           c.setAutoCommit(false);
+           System.out.println("");
+           
+           
+           stmt = c.createStatement();
+           ResultSet rs = stmt.executeQuery( "SELECT * FROM USUARIOS;" );
+           while ( rs.next() && contin == 0) {
+              String User = rs.getString("USER");
+              if(User.equals(user)){
+                   exist = 1;
+                   contin = 1;
+              }
+           }
+           stmt.close();
+           c.close();
+        } catch ( Exception e ) {
+           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+           System.exit(0);
+        }
+    if(exist == 1){
+        return true;
+    }
+    else{
+        return false;
+    }
+  }
   
   public static boolean login_sql() throws InterruptedException{
    Connection c = null;
@@ -386,7 +449,7 @@ public class sqlite_connection {
                     System.out.println("Acceso denegado");
                 }   break;
             */
- Connection c = null;
+   Connection c = null;
    Statement stmt = null;
    
    try {

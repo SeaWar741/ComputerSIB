@@ -7,15 +7,16 @@
 [Usuario]: juanca741@gmail.com
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-[Fecha(dd/mm/yr)]: Wed Apr 04 19:29:43 CDT 2018
+[Fecha(dd/mm/yr)]: Thu Apr 05 13:32:55 CDT 2018
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-Producto: Chocolate, cantidad: 156
+Producto: Chocolate, cantidad: 19
+Producto: Refresco, cantidad: 805
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-El Subtotal de la cuenta es de $7750.0
-Total de la cuenta es de $6975.0
+El Subtotal de la cuenta es de $41150.0
+Total de la cuenta es de $37035.0
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 		   Gracias por su compra

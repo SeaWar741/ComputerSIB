@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static shoppingcart.sqlite_connection.login_sql;
+import static shoppingcart.sqlite_connection.update_password;
 
 
 public class Shoppingcart {
@@ -155,12 +156,12 @@ public class Shoppingcart {
 
 //funciones del código
     
-    public static void welcome_menu_selection(){ //funcion de inicio, aun no esta completada, falta hacer el registro, implementar hasta 3er parcial
+    public static void welcome_menu_selection() throws InterruptedException, IOException{ //funcion de inicio, aun no esta completada, falta hacer el registro, implementar hasta 3er parcial
         Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard2 = new Scanner(System.in);
         boolean loop_do = true;
+        welcome();
         while(loop_do == true){
-            System.out.println(" ----------------------------------------------- ");
-            System.out.println("|               Bienvenido a Kukulcan           |");
             System.out.println("|-----------------------------------------------|");
             System.out.println("| [1] Iniciar sesion                            |");
             System.out.println("| [2] Registrarte                               |");
@@ -171,13 +172,28 @@ public class Shoppingcart {
             int selection = keyboard.nextInt();
             switch(selection){
                 case 1:
-                    //hacer login
+                    boolean login = login_sql();
+                    if(login == true){
+                        reading_products();
+                        selection_menu_display();
+                        selection_menu(elements);
+                    }
+                    else{
+                        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+                        System.out.println("Login invalido");
+                        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+                    }
+                    System.out.println();
+                    System.out.println();
                     loop_do = false;
                     break;
                 case 2:
                     loop_do = false;
                     break;
                 case 3:
+                    System.out.println("");
+                    String user = keyboard.nextLine();
+                    update_password(null);
                     loop_do = false;
                     break;
                 default:
@@ -185,6 +201,7 @@ public class Shoppingcart {
                     break;
         }
         }
+        exit();
     }
     
     public static boolean login_permission(HashMap database, HashMap answers) throws InterruptedException{ //funcion para verificar login, tipo de dato a regresar(booleano), si el login es exitoso entonces se regresara un valor true, en el caso contrario sera false
