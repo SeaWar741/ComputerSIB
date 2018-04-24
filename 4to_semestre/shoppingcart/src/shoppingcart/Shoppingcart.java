@@ -5,30 +5,24 @@
  */
 package shoppingcart;
 
-import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import static java.lang.Integer.parseInt;
 import java.util.*;
 import static java.util.Objects.hash;
-import static javax.script.ScriptEngine.FILENAME;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import static java.lang.Thread.sleep;
-import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static shoppingcart.sqlite_connection.adding_to;
+import static shoppingcart.sqlite_connection.insert_users_initial;
 import static shoppingcart.sqlite_connection.login_sql;
+import static shoppingcart.sqlite_connection.print_products;
 import static shoppingcart.sqlite_connection.update_password;
 
 
@@ -42,113 +36,18 @@ public class Shoppingcart {
     public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
     public static String security_question = "¿Cúal el nombre de tu primer mascota?";
     public static String promt = ">";
-    private static HashMap<String, String> hmap = new HashMap<>();
-    private static HashMap<String,String> security = new HashMap<>();
     private static final String FILENAME = "users.txt";
     public static String[][] elements = new String[6][10];
     public static String total_cost;
     public static String subtotal_cost;
     public static String us;
+    public static String login_allow;
     //end class constants
-    public static void main(String[] args) throws InterruptedException, IOException {
-        //(UTILIZAR LOOP Y CORRERLO PARA METODO DE RECURSION)boolean play = true; Metodo necesita perfeccionamiento
-        Scanner keyboard = new Scanner(System.in);
-        
-        //Solucion temporal, pasar a un archivo .txt encriptado(contraseñas y usuarios) con la api de dropbox
-        
-        /*database for user & passwords*/
-            /* cuentas con contraseñas reales sin encriptar
-            hmap.put("Theyought47@einrot.com","a01652138");
-            hmap.put("wcena201@ndfbmail.ga","6p4deq2gcl4k8bdc");
-            hmap.put("0syed.sab@pokeett.site","7clqdwqnjz7ohj8e");
-            hmap.put("oali.qasem@miur.ml","4trm8owbws7au24d");
-            hmap.put("idigao.pga@888z5.ml","pqat88120ibwtya0");
-            hmap.put("juanca741@gmail.com","juanca741");
-            hmap.put("matheo@pinzon.com.mx","matheo123");
-            hmap.put("vicente.nunez@itesm.mx","password");
-        */            
-        
-        /*database for users & security answer*/
-        //Base de datos con preguntas sin encriptar
-        /*HashMap<String,String> security = new HashMap<>();
-            security.put("Theyought47@einrot.com","pepe");
-            security.put("wcena201@ndfbmail.ga","thor");
-            security.put("0syed.sab@pokeett.site","gabriel");
-            security.put("oali.qasem@miur.ml","kala");
-            security.put("idigao.pga@888z5.ml","choli");
-            security.put("juanca741@gmail.com","olita");
-            security.put("matheo@pinzon.com.mx","charlott");
-            hmap.put("vicente.nunez@itesm.mx","informatica");
-        
-        */
-        
-        /* Implementacion con txt ( a remover y sustituir por sqlite)
-        String[][] elements = { {"","","","","",""}, 
-            {"","","","","",""},{"","","","","",""},
-            {"","","","","",""},{"","","","","",""},
-            {"","","","","",""},{"","","","","",""},
-            {"","","","","",""},{"","","","","",""},
-            {"","","","","",""}
-        };        
-        reading();
-        reading_products();
-        */        
-        
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-        //Usuarios con contraseñas(encriptadas)
-        HashMap<String, String> hmap = new HashMap<>();
-            hmap.put("Theyought47@einrot.com","efb6aacbde32d26bff954cfed9ffe3372104cf18");
-            hmap.put("wcena201@ndfbmail.ga","2e07125d0b7b6ea94cad1723649137215ab09d10");
-            hmap.put("0syed.sab@pokeett.site","22fa9a71b6eaf5ad83d6038f33491728982856d7");
-            hmap.put("oali.qasem@miur.ml","cf2bb7ec965f090f8e48304860e2f629c0f8a99f");
-            hmap.put("idigao.pga@888z5.ml","fa26e6e06ac77d53c3a0e4092af149a711c61b82");
-            hmap.put("juanca741@gmail.com","c938af029a1986d6efe956ccd05dd43989b71312");
-            hmap.put("matheo@pinzon.com.mx","ca9a6d03683cc471a1ef5817022d6c487e51f558");
-            hmap.put("vicente.nunez@itesm.mx","03e03fad39ff223e6148ff1c9d794678ab082f52");
-        
-        //Lista de usuarios con respuesta de pregunta de seguridad (encriptada)
-        HashMap<String,String> security = new HashMap<>();
-            security.put("Theyought47@einrot.com","17765ffe166b72d80a602ba7daaf1029c582f531");
-            security.put("wcena201@ndfbmail.ga","8fdc441e668daf84f902d1dfc8de089a9579f548");
-            security.put("0syed.sab@pokeett.site","0fbda0462c9539b02f0498148e0ab135031cdaa8");
-            security.put("oali.qasem@miur.ml","525b752f115f4d0790fff75b07aaa3e0897832a5");
-            security.put("idigao.pga@888z5.ml","c50a2b3c108227acaf199be912f963ae88e32a23");
-            security.put("juanca741@gmail.com","1e54b98763365a39b9041b49e8b3fce4b5e4dcb2");
-            security.put("matheo@pinzon.com.mx","dffe14fb6a431eeb9f40cd0f8df7deb68f8eeac8");
-            security.put("vicente.nunez@itesm.mx","90b9d6bfd48b513e2df53b77e4ccb09d7de82f0e");
-        
-        //Lista de productos sin ordernar, elemento 0(id), elemento 2(nombre), elemento 3(categoria), elemento 4(precio),elemento 5(descuento),elemento 6(rating)
-        String[][] elements = { {"0","Shampoo","limpieza","50","10","5"}, 
-            {"1","Deshodorante","limpieza","50","10","5"},{"2","Pasta dental","limpieza","50","10","5"},
-            {"3","Gel","limpieza","50","10","5"},{"4","Jabon","limpieza","50","10","5"},
-            {"5","Chocolate","comida","50","10","5"},{"6","Refresco","comida","50","10","5"},
-            {"7","Sabritones","comida","50","10","5"},{"8","Chicles","comida","50","10","5"},
-            {"9","Gummy","comida","50","10","5"}
-        };
-        
+    public static void main(String[] args) throws InterruptedException, IOException {    
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 //inicio código
-        welcome();
-        boolean run = true;
-        while(run = true){
-            boolean login = login_sql();
-            if(login == true){
-                //loading_animation();
-                reading_products();
-                selection_menu_display();
-                selection_menu(elements);
-            }
-            else{
-                System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-                System.out.println("Login invalido");
-                System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-            }
-            System.out.println();
-            System.out.println();
-        }
-        //encryption password = new encryption("hola");
+        welcome_menu_selection();
         /*fin del codigo*/
     }
     
@@ -166,17 +65,17 @@ public class Shoppingcart {
             System.out.println("| [1] Iniciar sesion                            |");
             System.out.println("| [2] Registrarte                               |");
             System.out.println("| [3] Recuperar contraseña                      |");
+            System.out.println("| [4] Salir                                     |");
             System.out.println(" ----------------------------------------------- ");
             System.out.println();
             System.out.print(promt);
             int selection = keyboard.nextInt();
             switch(selection){
                 case 1:
-                    boolean login = login_sql();
+                    boolean login = sqlite_connection.login_sql();
                     if(login == true){
-                        reading_products();
                         selection_menu_display();
-                        selection_menu(elements);
+                        selection_menu();
                     }
                     else{
                         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
@@ -188,12 +87,14 @@ public class Shoppingcart {
                     loop_do = false;
                     break;
                 case 2:
-                    loop_do = false;
+                    insert_users_initial();
                     break;
                 case 3:
                     System.out.println("");
                     String user = keyboard.nextLine();
-                    update_password(null);
+                    sqlite_connection.recover_password();
+                    break;
+                case 4:
                     loop_do = false;
                     break;
                 default:
@@ -216,7 +117,7 @@ public class Shoppingcart {
             System.out.println("Ingresar Contraseña"); //se imprime ingresar contraseña
             System.out.print(promt); //se imprime en la misma linea promt
             String password = keyboard.nextLine(); //se pide que el usuario ingrese si contraseña
-            String pass = encrypt(password); //el string pass es igual a el valor dado por la funcion encrypt(la cual encripta la contraseña)con el parametro de la variable password(pedida en la linea de arriba)
+            String pass = encryption.encryption(password); //el string pass es igual a el valor dado por la funcion encrypt(la cual encripta la contraseña)con el parametro de la variable password(pedida en la linea de arriba)
             if(pass.equals(database.get(user))){ //si la password encriptada es igual a el valor del hash de usuarios
                 return true; //si es true entonces se le asigna a la variable login_permission true
             }
@@ -236,14 +137,14 @@ public class Shoppingcart {
                 System.out.println("¿Cuál es el nombre de tu mascota?");//se pide que ingrese el nombre de su mascota
                 System.out.print(promt);
                 String user_answer = keyboard.nextLine();
-                String u_a = encrypt(user_answer); //el string u_a es igual al resultado de encriptar la respuesta del usuario
+                String u_a = encryption.encryption(user_answer); //el string u_a es igual al resultado de encriptar la respuesta del usuario
                 if(u_a.equals(answers.get(user))){ //si la respuesta de seguridad es igual a lo que escribio el usuario entonces se cambia la contraseña
                     System.out.println();
                     System.out.println("Identidad verificada");
                     System.out.println("Ingresar nueva contraseña");
                     System.out.print(promt);
                     String new_password = keyboard.nextLine();//se pide que ingrese la nueva contraseña
-                    String n_p = encrypt(new_password);//se encripta la nueva contraseña
+                    String n_p = encryption.encryption(new_password);//se encripta la nueva contraseña
                     database.put(user,n_p);//se inserta la nueva contraseña en el hash como valor del usuario
                     System.out.println();
                     System.out.println("Contraseña actualizada!");
@@ -290,7 +191,7 @@ public class Shoppingcart {
         System.out.println();
     }
     
-    public static void selection_menu(String[][] elements) throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para la seleccion del usuario
+    public static void selection_menu() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para la seleccion del usuario
         Scanner keyboard = new Scanner(System.in);//inicializacion del scanner
         System.out.println("Selecionar una opcion del menu");
         System.out.print(promt);
@@ -302,7 +203,7 @@ public class Shoppingcart {
                     sqlite_connection.print_products();//<--- Imprimir la lista de productos categorizados y por orden alfabetico
                     break;
                 case 2://caso dos es igual a añadir productos al carrito de compras
-                    adding_to(elements);//metodo adding_to con elments(carrito)
+                    sqlite_connection.adding_to();//metodo adding_to con elments(carrito)
                     break;
                 case 3://caso tres es igual a eliminar productos del carrito de compras
                     deleting_from(shopping_kart_items);//metodo deliting_from con el shopping_kart_items
@@ -385,79 +286,6 @@ public class Shoppingcart {
         });
     }
     
-    public static void adding_to(String[][] array){//funcion para añadir productos al carrito
-        Scanner keyboard = new Scanner(System.in);//inicializacion del scanner
-        Scanner key = new Scanner(System.in);
-        boolean valid_product = true;
-        boolean repetition = false;//variable repeticion establecida en false
-        while(repetition == false){ //mientras que la repeticion este en false entonces se hace el loop
-            System.out.println("Desea agregar algun producto? y/n");//se pregunta si se quiere añadir un producto
-            System.out.print(promt);
-            String selection = keyboard.nextLine();//ingresa valor
-            int counter = 0; //variable pára contador 1
-            int count = 0;//variable para contador 2
-            int x = 0; //variable para  indice
-            switch (selection.toLowerCase()) {//se hace el switch con lo que el usuario ingreso en minusculas
-                case "y": //caso y
-                    System.out.println("Ingresar ID del producto a añadir");
-                    System.out.print(promt);
-                    String product = keyboard.nextLine(); //ingresar el id del producto a añadir
-                    System.out.println("Ingresar la cantidad a añadir"); //ingresar cantidad de productos
-                    System.out.print(promt);
-                    int times = key.nextInt();
-                    while(count<9){//mientras que el count sea menor a nueve entonces realizar operacion
-                        if(array[x][0].equals(product)){ //si i en el indice 0 es igual al producto entonces
-                            for(int i = 0; i<times;i++){//añadir los productos al carrito la cantidad de veces que se ingreso
-                                shopping_kart_items.add(array[x][1]);
-                                valid_product = true;
-                            }
-                        }
-                        x++; //aumentar el valor de x y count en 1
-                        count++;
-                    }
-
-                    x = 0; //reestableceer el valor de x a 0
-                    while(counter < 9){ //mientras que le contador sea menor a nueve entonces realizar operacion
-                        if(array[x][0].equals(product)){ //si i en el indice 0 es igual al producto entonces
-                            String price = array[x][3]; //el precio es igual el valor en el array en el indice x subindice 3
-                            String discount = array[x][4]; //el descuenbto es el valor en el array en el indice x subindice 4
-                            int price_int = parseInt(price); //se pasa el precio a int
-                            for(int i = 0; i<times;i++){ //ingresar el costo de cada producto en el carrito, junto con su descuento
-                                shopping_kart_money_original.add(price_int);//se añade a el costo original del producto
-                                price_discount(shopping_kart_money, price, discount);//se añade el precio ya con el descuento
-                                valid_product = true;
-                                counter = 9;
-                            }
-                        }
-                        else{
-                            valid_product = false;
-                        }
-                        x ++; //se aumenta el valor de x y de counter +1
-                        counter ++;
-                    }
-                    if(valid_product == false){
-                        System.out.println("");
-                        System.out.println("Producto no valido, ingresar otro ID");
-                    } 
-                    System.out.println("");
-                    /*System.out.println("Productos seleccionados: " +shopping_kart_items);//imprimir lista de productos seleccionados, el subtotal y el total
-                    System.out.println("Subtotal de productos seleccionados" + shopping_kart_money_original);
-                    System.out.println("Total de los productos seleccionados: "+shopping_kart_money);
-                    */
-                    display_kart();
-                    System.out.println("");
-                    break;
-                case "n": //en caso de que no se desee agregar, entonces se rompe el loop
-                    repetition = true;
-                    //function selection menu
-                    break;
-                default://default
-                    System.out.println("Valor invalido");
-                    break;
-            }
-        }
-    }
-    
     public static void deleting_from(ArrayList arry){//elimiar del carrito
         Scanner keyboard = new Scanner(System.in); //inicializar el scanner
         Scanner key = new Scanner(System.in);
@@ -498,6 +326,7 @@ public class Shoppingcart {
     public static void display_kart(){ //funcion para desplegar el carrito de compras, subtotal,total,items con cantidad
         double sum = 0; //double con suma
         double sum_or = 0; //double suma original 
+        System.out.println("");
         for(int i = 1; i < shopping_kart_money_original.size(); i++){//para cada elmento del shopping cart se le hace suma, esto para poder conocer el subtotal de todos los elementos en el carrito sin el descuento
             sum_or += shopping_kart_money_original.get(i);
         }
@@ -517,35 +346,58 @@ public class Shoppingcart {
     }
     
     public static void checkout() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para el checkout
-        //code
+        Scanner keyboard = new Scanner(System.in);
+        double sum = 0; 
+        for(int i = 1; i < shopping_kart_money.size(); i++){//para cada elemento del shopping cart se le hace suma,esto para conocer el total de todos los elementos en el carrito con el descuento
+            sum += shopping_kart_money.get(i);
+        }
+        
         if(shopping_kart_items == null){ //si el carro no tiene nada entonces se imprime que la cuenta esta en 0 y se cierra el programa
             System.out.println("cuenta en: $0");
             exit();
         }
         else{//si no esta vacio entonces se procede al pago
-            //falta implementar la verificacion de tarjetas de credito con el agoritmo de encriptacion
-            display_kart();
-            System.out.println("Validando pago"); 
-            loading_animation();
-            writting();
-            System.out.println("Pago validado, Gracias Por su compra");
-            System.out.println();
-            Runtime rt=Runtime.getRuntime();
-            String file = "Ticket.txt";
-            Process p=rt.exec("notepad " +file);
-            //Runtime.getRuntime().exec("cmd /c start print.bat");
-            //File file2 = new File("print.bat");
-            //Desktop.getDesktop().open(file2);
-            exit();//se cierra el programa
+            if(sum == 0){
+                System.out.println("");
+                System.out.println("Su Cuenta en: $0");
+                System.out.println("");
+                exit();
+            }
+            else{
+                display_kart();
+                System.out.println("");
+                System.out.println("Desea proceder al pago? (y/n)");
+                System.out.print(promt);
+                String selection = keyboard.nextLine();
+                switch(selection.toLowerCase()){
+                        case("y"):
+                            System.out.println("Validando pago"); 
+                            loading_animation();
+                            writting();
+                            System.out.println("Pago validado, Gracias Por su compra");
+                            System.out.println();
+                            Runtime rt=Runtime.getRuntime();
+                            String file = "Ticket.txt";
+                            Process p=rt.exec("notepad " +file);
+                            //Runtime.getRuntime().exec("cmd /c start print.bat");
+                            //File file2 = new File("print.bat");
+                            //Desktop.getDesktop().open(file2);
+                            exit();//se cierra el programa
+                            break;
+                        case("n"):
+                            System.out.println("");
+                            break;
+                        default:
+                            System.out.println("Entrada no valida");
+                            break;
+                }
+            }            
         }
-        
     }
     
     public static void welcome(){
         System.out.println("");
-        System.out.println("            Bienvenido a Kukulkan           ");
-        System.out.println("--------------------------------------------");
-        System.out.println("");
+        System.out.println("                Bienvenido a Kukulkan            ");
     }
     
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*    
@@ -583,35 +435,12 @@ public class Shoppingcart {
         System.out.println();
     }
     
-    
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    
-//encriptado de datos
-    public static String encrypt(String txt) { //funcion para encriptar
-        String encrypted = getHash(algorithmencrypt(txt),"Sha1"); //se pasa a hash el string, con el metodo de encriptado sha1
-        return encrypted; //regresa el string encriptado
-    }
-    
-    public static String algorithmencrypt(String txt){ //se juntan el string con el salt y se hashean
-        String password = String.valueOf(hash(txt + "seawar741seawar741"));
-        return password;
-    }
-    
-    public static String getHash(String txt, String hashType){ //funcion para pasarlo a hash, con el java.security, esto hace la encriptacion, pasando el string a hash
-        try{
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
-            byte[] array = md.digest(txt.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < array.length; ++i){
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
+    public static String espacio(String PAL, int TAM){
+        while(PAL.length()<TAM){
+            PAL+=" ";
         }
-        return null;
+        return PAL;
     }
-    
     
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     
@@ -674,60 +503,7 @@ public class Shoppingcart {
             // Always close files.
         } //double con suma
     }
-    
-    public static void reading() throws IOException{
-	try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null && !"".equals(sCurrentLine = br.readLine())) { // se hara una lectura, añadiendo la cdontraseña, usuario y respuesta a pregunta de seguridad dentro de dos hash(security y hmap)
-                String[] usp = new String[3];
-                usp = sCurrentLine.split(",");
-                String user = usp[0];
-                String pass = usp[1];
-                String ans = usp[2];
-                hmap.put(user,pass);
-                security.put(user,ans);
-            }
-        }
-    }
-   
-   
-    public static void reading_products() throws IOException{
-       String file = "productos.txt";
-       try(BufferedReader br = new BufferedReader(new FileReader(file))){
-           String sCurrentLine;
-           int i = 0;
-           while((sCurrentLine = br.readLine()) != null) { 
-                String[] product = new String[6];
-                product = sCurrentLine.split(",");
-                String id = product[0];
-                String name = product[1];
-                String cat = product[2];
-                String price = product[3];
-                String discount = product[4];
-                String rating = product[5];
-                for(i = 0;i<6;i++){
-                    elements[i] = product;
-                }
-           }   
-        }
-   }
-   
-   
-   
-    /*
-        for (int r=0; r<shades.length; r++) {
-        for (int c=0; c<shades[r].length; c++) {
-            shades[r][c]="hello";//your value
-        }
-    }
-    */
-    
-    public static void user_register(String user, String pass, String sec_a){
-        pass = encrypt(pass);
-        sec_a = encrypt(pass);
-        
-    }
-    
+       
     public static void printGrid(String[][] a, String file) throws IOException{
        for(int i = 0; i < countLines(file); i++)
        {
