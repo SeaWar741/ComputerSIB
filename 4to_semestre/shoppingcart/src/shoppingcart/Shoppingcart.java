@@ -6,24 +6,16 @@
 package shoppingcart;
 
 import java.io.BufferedInputStream;
-import static java.lang.Integer.parseInt;
 import java.util.*;
-import static java.util.Objects.hash;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
-import static shoppingcart.sqlite_connection.adding_to;
 import static shoppingcart.sqlite_connection.insert_users_initial;
-import static shoppingcart.sqlite_connection.login_sql;
-import static shoppingcart.sqlite_connection.print_products;
-import static shoppingcart.sqlite_connection.update_password;
 
 
 public class Shoppingcart {
@@ -36,22 +28,16 @@ public class Shoppingcart {
     public static ArrayList<Integer> shopping_kart_money = new ArrayList<Integer>();
     public static String security_question = "¿Cúal el nombre de tu primer mascota?";
     public static String promt = ">";
-    private static final String FILENAME = "users.txt";
-    public static String[][] elements = new String[6][10];
     public static String total_cost;
     public static String subtotal_cost;
     public static String us;
     public static String login_allow;
     //end class constants
+    
     public static void main(String[] args) throws InterruptedException, IOException {    
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-//inicio código
         welcome_menu_selection();
-        /*fin del codigo*/
     }
     
-//-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 //funciones del código
     
@@ -100,7 +86,7 @@ public class Shoppingcart {
                 default:
                     System.out.println("Entrada no valida, favor de escribir un valor correcto");
                     break;
-        }
+            }
         }
         exit();
     }
@@ -493,14 +479,6 @@ public class Shoppingcart {
             writer.println("|||||| ||||||| ||||| ||||||||||| |||||| |||| ||| || ||||");
             writer.println("| 	    2 5 4 5 5 6 4 4 6 2 4 6 8 4  55 5          |");
             writer.close();
-            /*
-            bufferedWriter.write("Hello there,");
-            bufferedWriter.write(" here is some text.");
-            bufferedWriter.newLine();
-            bufferedWriter.write("We are writing");
-            bufferedWriter.write(" the text to the file.");
-             */
-            // Always close files.
         } //double con suma
     }
        

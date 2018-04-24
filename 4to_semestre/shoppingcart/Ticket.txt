@@ -7,16 +7,16 @@
 [Usuario]: juanca741@gmail.com
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-[Fecha(dd/mm/yr)]: Mon Apr 23 21:23:28 CDT 2018
+[Fecha(dd/mm/yr)]: Mon Apr 23 21:50:20 CDT 2018
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-Producto: Chocolate, cantidad: 3
+Producto: Chocolate, cantidad: 6
 Producto: Chicles clorent, cantidad: 15
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-El Subtotal de la cuenta es de $850.0
-Total de la cuenta es de $765.0
+El Subtotal de la cuenta es de $1000.0
+Total de la cuenta es de $900.0
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 		   Gracias por su compra
