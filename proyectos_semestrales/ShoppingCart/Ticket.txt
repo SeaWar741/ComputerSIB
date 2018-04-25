@@ -10,18 +10,19 @@
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 [Usuario]: juanca741@gmail.com
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-[Fecha(dd/mm/yr)]: Tue Apr 24 15:35:33 CDT 2018
+[Fecha(dd/mm/yr)]: Tue Apr 24 21:38:07 CDT 2018
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 Articulo	Cantidad	Pre.Unit	Total
-Refesco         5               $50.0           $225.0         
-Chicles         10              $50.0           $450.0         
+Chicles         15              $50.0           $675.0         
+Refesco         80              $50.0           $3600.0        
+Chocolate       845             $50.0           $38025.0       
 
 
-El Subtotal de la cuenta es de $750.0 (sin descuento)
-Total de la cuenta es de $675.0
+El Subtotal de la cuenta es de $47000.0 (sin descuento)
+Total de la cuenta es de $42300.0
 
-			Articulo(s):15
+			Articulo(s):940
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 		   Gracias por su compra

@@ -10,18 +10,17 @@
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 [Usuario]: juanca741@gmail.com
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-[Fecha(dd/mm/yr)]: Tue Apr 24 14:57:22 CDT 2018
+[Fecha(dd/mm/yr)]: Wed Apr 25 07:40:49 CDT 2018
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 Articulo	Cantidad	Pre.Unit	Total
-Chicles         5               $50.0           $225.0         
-Refesco         10              $50.0           $450.0         
+Pasta           12              $50.0           $540.0         
 
 
-El Subtotal de la cuenta es de $750.0 (sin descuento)
-Total de la cuenta es de $675.0
+El Subtotal de la cuenta es de $600.0 (sin descuento)
+Total de la cuenta es de $540.0
 
-			Articulo(s):15
+			Articulo(s):12
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 		   Gracias por su compra
