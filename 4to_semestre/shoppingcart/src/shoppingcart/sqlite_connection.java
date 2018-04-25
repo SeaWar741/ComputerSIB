@@ -14,7 +14,6 @@ import static shoppingcart.Shoppingcart.category_2;
 import static shoppingcart.Shoppingcart.category_default;
 import static shoppingcart.Shoppingcart.exit;
 import static shoppingcart.Shoppingcart.loading_animation;
-import static shoppingcart.Shoppingcart.price_discount;
 import static shoppingcart.Shoppingcart.promt;
 import static shoppingcart.Shoppingcart.shopping_kart_items;
 import static shoppingcart.Shoppingcart.shopping_kart_money;
@@ -542,12 +541,57 @@ public class sqlite_connection {
         }
     }
     
+    public static String cost(String name){
+        Connection c = null;
+        Statement stmt = null;
+        String product_info = "";
+        try {
+           Class.forName("org.sqlite.JDBC");
+           c = DriverManager.getConnection("jdbc:sqlite:Products.db");
+           c.setAutoCommit(false);
+           stmt = c.createStatement();
+           ResultSet rs = stmt.executeQuery( "SELECT * FROM PRODUCTOS;" );
+           while ( rs.next() ) {
+              int ID = rs.getInt("ID");
+              String  Name = rs.getString("NAME");
+              String  Price = rs.getString("PRICE");
+              String  Discount = rs.getString("DISCOUNT");
+              String  Rating = rs.getString("RATING");
+             if(Name.equals(name)){
+                 int times = Collections.frequency(shopping_kart_items, Name);
+                 double pri = Double.parseDouble(Price);
+                 Price = String.valueOf(pri);
+                 product_info = espacio(Price,15)+espacio(end_price(Price,Discount,times),15);
+             }
+           }
+        } catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.out.println("error");
+        }
+        return product_info;
+    }
+    
+    public static String end_price(String price,String discount,Integer times){
+        double p = Double.parseDouble(price);
+        double d = Double.parseDouble(discount);
+        double total = (((100-d)*p)/100)*times;
+        String tot = "$"+Double.toString(total);
+        return tot;
+    }
+    
     public static String espacio(String PAL, int TAM){
         while(PAL.length()<TAM){
             PAL+=" ";
         }
         return PAL;
     }
-    
-    
+   
+    public static void price_discount(ArrayList<Integer> shopping_kart,String price, String discount){//hacer el desucento del product
+        int intprice = Integer.parseInt(price); //se pasa a integer el precio del product
+        int intdisc = Integer.parseInt(discount);//se pasa a integer el descuento del product
+        int part1 = 100 - intdisc; //se hace regla de tres para obtener el precio
+        int part2 = intprice * part1;
+        int total = part2/100; //se hace el descuento
+        shopping_kart.add(total);//se añade al descuento en el carrito de compras
+    }
 }

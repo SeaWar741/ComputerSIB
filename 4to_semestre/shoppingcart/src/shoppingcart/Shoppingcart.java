@@ -5,7 +5,9 @@
  */
 package shoppingcart;
 
+import java.awt.Desktop;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.util.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -287,7 +289,6 @@ public class Shoppingcart {
         if(arry.contains(delete_product)){//si el array contiene el producto a eliminar entonces se realiza la operacion
             for(int i = 0; i< quantity; i++){ // <----- Arreglar para que no haga tanto display del string
                 int delete_product_index = arry.indexOf(delete_product); //conseguir el indice del producto a eliminar
-                //falta pedir la cantida de productos, por ahora solo elimina uno a la vez
                     shopping_kart_items.remove(delete_product);//se elimina de los items
                     shopping_kart_money_original.remove(delete_product_index);//se elimina del original
                     shopping_kart_money.remove(delete_product_index);//se elimina del descuento
@@ -300,23 +301,14 @@ public class Shoppingcart {
             }
     }
     
-    public static void price_discount(ArrayList<Integer> shopping_kart,String price, String discount){//hacer el desucento del product
-        int intprice = Integer.parseInt(price); //se pasa a integer el precio del product
-        int intdisc = Integer.parseInt(discount);//se pasa a integer el descuento del product
-        int part1 = 100 - intdisc; //se hace regla de tres para obtener el precio
-        int part2 = intprice * part1;
-        int total = part2/100; //se hace el descuento
-        shopping_kart.add(total);//se añade al descuento en el carrito de compras
-    }
-    
     public static void display_kart(){ //funcion para desplegar el carrito de compras, subtotal,total,items con cantidad
         double sum = 0; //double con suma
         double sum_or = 0; //double suma original 
         System.out.println("");
-        for(int i = 1; i < shopping_kart_money_original.size(); i++){//para cada elmento del shopping cart se le hace suma, esto para poder conocer el subtotal de todos los elementos en el carrito sin el descuento
+        for(int i = 0; i < shopping_kart_money_original.size(); i++){//para cada elmento del shopping cart se le hace suma, esto para poder conocer el subtotal de todos los elementos en el carrito sin el descuento
             sum_or += shopping_kart_money_original.get(i);
         }
-        for(int i = 1; i < shopping_kart_money.size(); i++){//para cada elemento del shopping cart se le hace suma,esto para conocer el total de todos los elementos en el carrito con el descuento
+        for(int i = 0; i < shopping_kart_money.size(); i++){//para cada elemento del shopping cart se le hace suma,esto para conocer el total de todos los elementos en el carrito con el descuento
             sum += shopping_kart_money.get(i);
         }
         Set<String> printed = new HashSet<>(); //se crea un hash llamado printed
@@ -333,6 +325,7 @@ public class Shoppingcart {
     
     public static void checkout() throws InterruptedException, FileNotFoundException, UnsupportedEncodingException, IOException{ //funcion para el checkout
         Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard2 = new Scanner(System.in);
         double sum = 0; 
         for(int i = 1; i < shopping_kart_money.size(); i++){//para cada elemento del shopping cart se le hace suma,esto para conocer el total de todos los elementos en el carrito con el descuento
             sum += shopping_kart_money.get(i);
@@ -363,11 +356,12 @@ public class Shoppingcart {
                             System.out.println("Pago validado, Gracias Por su compra");
                             System.out.println();
                             Runtime rt=Runtime.getRuntime();
+                            
                             String file = "Ticket.txt";
                             Process p=rt.exec("notepad " +file);
-                            //Runtime.getRuntime().exec("cmd /c start print.bat");
-                            //File file2 = new File("print.bat");
-                            //Desktop.getDesktop().open(file2);
+                            Runtime.getRuntime().exec("cmd /c start print.bat");
+                            File file2 = new File("print.bat");
+                            Desktop.getDesktop().open(file2);
                             exit();//se cierra el programa
                             break;
                         case("n"):
@@ -436,19 +430,23 @@ public class Shoppingcart {
         try (PrintWriter writer = new PrintWriter("Ticket.txt")) {
             double sum = 0; //double con suma
             double sum_or = 0; //double suma original 
+            writer.println();
+            writer.println("	 Cadena Comercial Kukulkan S.A de C.V");
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*"); 
             writer.println("      _  ___      _          _                 ");
             writer.println("     | |/ //_  _ | | ___   _| |  ___ __ _ _ __  ");
             writer.println("     | ' //  | | | |/ /  | | | |// __// _` | '_ \\ ");
             writer.println("     | . \\   |_| |   < | |_| | | (_|   (_| | | | |");
             writer.println("     |_|\\_\\__,_|_|\\_\\__,_|_|\\___\\____|_| |_|");
+            writer.println();
             writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             writer.println("[Usuario]: " +us);
-            writer.println();
-            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Date date = new Date();
             writer.println("[Fecha(dd/mm/yr)]: " +date.toString());
-            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             writer.println();
+            writer.println("Articulo	Cantidad	Pre.Unit	Total");
             for(int i = 1; i < shopping_kart_money_original.size(); i++){//para cada elmento del shopping cart se le hace suma, esto para poder conocer el subtotal de todos los elementos en el carrito sin el descuento
                 sum_or += shopping_kart_money_original.get(i);
             }
@@ -458,14 +456,17 @@ public class Shoppingcart {
             Set<String> printed = new HashSet<>(); //se crea un hash llamado printed
             shopping_kart_items.stream().filter((s) -> (printed.add(s)) // set.add () te dice si el elemento esta en el set, esto para saber cuantos productos hay por cada uno
             ).forEachOrdered((s) -> {
-                writer.println("Producto: " + s
-                        + ", cantidad: " + Collections.frequency(shopping_kart_items, s)); //se imprime el producto, con la cantidad (frecuencia) que aparecen en el set
+                writer.println(
+                        espacio(s,16)
+                       +espacio(Integer.toString(Collections.frequency(shopping_kart_items, s)),16)
+                       +"$"+sqlite_connection.cost(s)); //se imprime el producto, con la cantidad (frecuencia) que aparecen en el set
             });
             writer.println();
-            writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             writer.println();
-            writer.println(subtotal_cost);
+            writer.println(subtotal_cost+" (sin descuento)");
             writer.println(total_cost);
+            writer.println();
+            writer.println("			Articulo(s):"+shopping_kart_items.size());
             writer.println();
             writer.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             writer.println("		   Gracias por su compra");
@@ -510,6 +511,7 @@ public class Shoppingcart {
             return (count == 0 && !empty) ? 1 : count;
         }
     }
+    
     
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     
