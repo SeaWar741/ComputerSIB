@@ -164,6 +164,8 @@ class Matrix_validator{
                 }
             }catch(ArrayIndexOutOfBoundsException exception) {
                 System.out.println("No se puede realizar o terminar la operación");
+                System.out.println("");
+                menu();
             }
         }
         public static void two_matrix(){
