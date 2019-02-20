@@ -49,16 +49,18 @@ public class Employeesimulator {
                     if(i != 0){
                         System.out.println("--------------------------------------");
                     }
-                    System.out.println(employeelist[i].name);
-                    System.out.println(employeelist[i].nomina);
-                    System.out.println(employeelist[i].secure);
-                    System.out.println(employeelist[i].contract);
-                    System.out.println(employeelist[i].fixed);
-                    System.out.println(employeelist[i].cost_h);
-                    System.out.println(employeelist[i].hours);
-                    System.out.println(employeelist[i].type);
+                    System.out.println("Nómina: "+employeelist[i].nomina);
+                    System.out.println("Nombre: "+employeelist[i].name);
+                    System.out.println("Seguro social: "+employeelist[i].secure);
+                    System.out.println("Tipo de contrato: "+employeelist[i].contract);
+                    System.out.println("Empleado con sueldo fijo: "+employeelist[i].fixed);
+                    //System.out.println(employeelist[i].cost_h);
+                    System.out.println("Horas extras trabajadas: "+employeelist[i].hours);
+                    System.out.println("Tipo de empleado: "+employeelist[i].type);
                     
                 }
+                System.out.println("-------------------------------------- \n");
+                menu();
                 break;
             default:
                 System.out.println("Seleccionar otra opción");
@@ -72,7 +74,11 @@ public class Employeesimulator {
         Random rand = new Random();
         int nom = 50000  + rand.nextInt(99999 - 50000  + 1);
         int ss = 50000  + rand.nextInt(99999 - 50000  + 1);
+//        if(gerente <=20 ||  jefe <=2 || limpieza <=2 || seguridad <=3){
+//            
+//        }
         int ty = rand.nextInt(4+1);
+        int hrs = rand.nextInt(5-2 +1);
         int contr = rand.nextInt(4+1);
         employee employee = new employee();
         employee.name = namegen();
@@ -80,14 +86,15 @@ public class Employeesimulator {
         employee.type = ty;
         switch(ty){
             case 0: //gerente
-                employee.contract = contracts[0];
+                employee.contract = contracts[2];
                 employee.fixed = true;
                 employee.secure = Integer.toHexString(ss);
-                //employee.cost_h = ;
-                //employee.hours = ;
+                employee.hours = hrs;
                 break;
             case 1://jefe
-                
+                employee.contract = contracts[1];
+                employee.fixed = true;
+                employee.secure = Integer.toHexString(ss);
                 break;
             case 2://empleado
                 break;
@@ -161,13 +168,11 @@ public class Employeesimulator {
 }
 
 class employee{
-    int id;
     String name;
     String nomina;
     String secure;
     String contract;
     boolean fixed;
-    double cost_h;
     int hours;
     int type;
     
