@@ -6,6 +6,7 @@
 package employeesimulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,15 +21,16 @@ public class Employeesimulator {
      */
     //[nombre,tipo de empleado, nomina, seguro social, tipo de contrato, saliario, costo por hora, numeor de horas trabajadas]
     //[gerente,jefe,empleado de oficina, personal de limpieza, personal de seguridad]
-    static ArrayList<employee> list = new ArrayList<>(); //lista de los empleados
+    public static ArrayList<employee> list = new ArrayList<>(); //lista de los empleados
     static int gerente,jefe,empleado,limpieza,seguridad;
              //0       1      2          3    4
     public static void main(String[] args) {
         // TODO code application logic here
         //arraylist para los empleados --> []
-        for(int i = 0;i<20;i--){
+        for(int i = 0;i<20;i++){
             generator();
         }
+        menu();
     }
     
     public static void menu(){
@@ -40,16 +42,64 @@ public class Employeesimulator {
         Scanner keyboard = new Scanner(System.in);
         int selection = keyboard.nextInt();
         switch(selection){
+            case 1:
+                employee[] employeelist = list.toArray(new employee[list.size()]);
+                System.out.println("----------Lista de empleados----------");
+                for(int i = 0; i< list.size(); i++){
+                    if(i != 0){
+                        System.out.println("--------------------------------------");
+                    }
+                    System.out.println(employeelist[i].name);
+                    System.out.println(employeelist[i].nomina);
+                    System.out.println(employeelist[i].secure);
+                    System.out.println(employeelist[i].contract);
+                    System.out.println(employeelist[i].fixed);
+                    System.out.println(employeelist[i].cost_h);
+                    System.out.println(employeelist[i].hours);
+                    System.out.println(employeelist[i].type);
+                    
+                }
+                break;
+            default:
+                System.out.println("Seleccionar otra opción");
+                break;
+                
         }
     }
     
     public static void generator(){
+        String[] contracts = {"Temporal", "indefinido","Por obra","Internship"}; 
         Random rand = new Random();
         int nom = 50000  + rand.nextInt(99999 - 50000  + 1);
         int ss = 50000  + rand.nextInt(99999 - 50000  + 1);
+        int ty = rand.nextInt(4+1);
+        int contr = rand.nextInt(4+1);
         employee employee = new employee();
         employee.name = namegen();
         employee.nomina = Integer.toString(nom);
+        employee.type = ty;
+        switch(ty){
+            case 0: //gerente
+                employee.contract = contracts[0];
+                employee.fixed = true;
+                employee.secure = Integer.toHexString(ss);
+                //employee.cost_h = ;
+                //employee.hours = ;
+                break;
+            case 1://jefe
+                
+                break;
+            case 2://empleado
+                break;
+            case 3://limpieza
+                break;
+            case 4://seguridad
+                break;
+            default:
+                break;
+        }
+        
+        list.add(employee);
     }
     public static String namegen(){
         String name ="";
