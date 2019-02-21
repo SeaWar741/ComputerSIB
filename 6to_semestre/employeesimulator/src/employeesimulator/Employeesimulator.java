@@ -22,24 +22,26 @@ public class Employeesimulator {
     //[nombre,tipo de empleado, nomina, seguro social, tipo de contrato, saliario, costo por hora, numeor de horas trabajadas]
     //[gerente,jefe,empleado de oficina, personal de limpieza, personal de seguridad]
     public static ArrayList<employee> list = new ArrayList<>(); //lista de los empleados
-    static int gerente,jefe,empleado,limpieza,seguridad;
+    public static int gerente,jefe,empleado,limpieza,seguridad;
              //0       1      2          3    4
     public static void main(String[] args) {
         // TODO code application logic here
         //arraylist para los empleados --> []
-        for(int i = 0;i<20;i++){
+        while(list.size() < 20){
             generator();
         }
         menu();
     }
     
     public static void menu(){
+        String[] titles = {"gerente","jefe","empleado","limpieza","seguridad"};
         System.out.println("----------Bienvenido----------");
         System.out.println("1)Ver empleados");
         System.out.println("2)Registrar nuevo empleado");
         System.out.println("3)Cálculo de nómina para empleado");
         System.out.println("4)Salir");
         Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard2 = new Scanner(System.in);
         int selection = keyboard.nextInt();
         switch(selection){
             case 1:
@@ -56,57 +58,101 @@ public class Employeesimulator {
                     System.out.println("Empleado con sueldo fijo: "+employeelist[i].fixed);
                     //System.out.println(employeelist[i].cost_h);
                     System.out.println("Horas extras trabajadas: "+employeelist[i].hours);
-                    System.out.println("Tipo de empleado: "+employeelist[i].type);
+                    System.out.println("Tipo de empleado: "+titles[employeelist[i].type]);
                     
                 }
                 System.out.println("-------------------------------------- \n");
                 menu();
                 break;
+            case 2:
+                System.out.println("Registrar empleados");
+                menu();
+                break;
+            case 3:
+                System.out.println("Ingresar nómina");
+                String nomina = keyboard2.next();
+                
+                break;
             default:
                 System.out.println("Seleccionar otra opción");
+                System.out.println(gerente); //1
+                System.out.println(jefe); //2
+                System.out.println(limpieza); //2
+                System.out.println(seguridad); //3
+                menu();
                 break;
                 
         }
     }
     
     public static void generator(){
-        String[] contracts = {"Temporal", "indefinido","Por obra","Internship"}; 
+        String[] contracts = {"Temporal", "Indefinido","Por obra","Internship"}; 
+        
         Random rand = new Random();
         int nom = 50000  + rand.nextInt(99999 - 50000  + 1);
         int ss = 50000  + rand.nextInt(99999 - 50000  + 1);
 //        if(gerente <=20 ||  jefe <=2 || limpieza <=2 || seguridad <=3){
 //            
 //        }
-        int ty = rand.nextInt(4+1);
-        int hrs = rand.nextInt(5-2 +1);
-        int contr = rand.nextInt(4+1);
+        int ty;
+        if(continue_creation() == true){
+            ty = rand.nextInt(4);
+        }
+        else{
+            ty = 2;
+        }
+        int hrs = rand.nextInt(10);
+        int contr = rand.nextInt(4);
         employee employee = new employee();
         employee.name = namegen();
         employee.nomina = Integer.toString(nom);
         employee.type = ty;
-        switch(ty){
-            case 0: //gerente
-                employee.contract = contracts[2];
-                employee.fixed = true;
-                employee.secure = Integer.toHexString(ss);
-                employee.hours = hrs;
-                break;
-            case 1://jefe
-                employee.contract = contracts[1];
-                employee.fixed = true;
-                employee.secure = Integer.toHexString(ss);
-                break;
-            case 2://empleado
-                break;
-            case 3://limpieza
-                break;
-            case 4://seguridad
-                break;
-            default:
-                break;
-        }
         
-        list.add(employee);
+            switch(ty){
+                case 0: //gerente
+                    employee.contract = contracts[1];
+                    employee.fixed = true;
+                    employee.secure = Integer.toString(ss);
+                    employee.hours = hrs;
+                    gerente ++;
+                    break;
+                case 1://jefe
+                    employee.contract = contracts[1];
+                    employee.fixed = true;
+                    employee.secure = Integer.toString(ss);
+                    employee.hours = hrs;
+                    jefe ++;
+                    break;
+                case 2://empleado
+                    employee.contract = contracts[contr];
+                    employee.fixed = true;
+                    employee.secure = Integer.toString(ss);
+                    employee.hours = hrs;
+                    empleado++;
+                    break;
+                case 3://limpieza
+                    employee.contract = contracts[contr];
+                    employee.fixed = true;
+                    employee.secure = Integer.toString(ss);
+                    employee.hours = hrs;
+                    limpieza++;
+                    break;
+                case 4://seguridad
+                    employee.contract = contracts[contr];
+                    
+                    employee.secure = Integer.toString(ss);
+                    employee.hours = hrs;
+                    seguridad ++;
+                    break;
+                default:
+                    break;
+            }
+            if(contr == 3 || contr == 2 || contr == 0){
+                employee.fixed = false;
+                employee.secure = "No aplica";
+            }
+            list.add(employee);
+            
     }
     public static String namegen(){
         String name ="";
@@ -120,15 +166,10 @@ public class Employeesimulator {
     }
     //clase verificador de cuantos hay 
     //solo pueden haber 1 gerente, 2 jefes, 3 vigilantes, 2 limpieza
-    public static boolean continue_creation(int type){
-        //checar en el array de objetos si existe ya la cantidad de 
-        if(type == gerente && gerente <=20 || type == jefe && jefe <=2 || type == limpieza && limpieza <=2 || type == seguridad && seguridad <=3){ //arreglar
-            return true;
-        }
-        else{
-            System.out.println("Ya no existen posiciones disponibles para este tipo de empleo");
-            return false;
-        }
+    public static boolean continue_creation(){
+        //checar en el array de objetos si existe ya la cantidad de
+        return gerente <1 && jefe <2 && limpieza <2 && seguridad <3; //arreglar
+        //System.out.println("Ya no existen posiciones disponibles para este tipo de empleo");
     }
     public static void display_employees(){
         //pasar Arraylists a arrays
