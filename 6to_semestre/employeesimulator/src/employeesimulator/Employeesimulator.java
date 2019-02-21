@@ -43,9 +43,10 @@ public class Employeesimulator {
         Scanner keyboard = new Scanner(System.in);
         Scanner keyboard2 = new Scanner(System.in);
         int selection = keyboard.nextInt();
+        employee[] employeelist = list.toArray(new employee[list.size()]);
         switch(selection){
             case 1:
-                employee[] employeelist = list.toArray(new employee[list.size()]);
+                
                 System.out.println("----------Lista de empleados----------");
                 for(int i = 0; i< list.size(); i++){
                     if(i != 0){
@@ -71,7 +72,13 @@ public class Employeesimulator {
             case 3:
                 System.out.println("Ingresar nómina");
                 String nomina = keyboard2.next();
-                
+                for(int i = 0; i< list.size(); i++){
+                    if(employeelist[i].nomina.equals(nomina)){
+                        nomina_empleado(employeelist[i].type,employeelist[i].hours);
+                    }
+                    
+                }
+                menu();
                 break;
             default:
                 System.out.println("Seleccionar otra opción");
@@ -181,10 +188,10 @@ public class Employeesimulator {
         //vaciar arraylists
         //eliminar del array el que tenga ese id
     }
-    public static void nomina_empleado(int id){
+    public static void nomina_empleado(int type, int h){
         payments payments = new payments();
         //consigue la informacion de horas extras trabajadas
-        int type = 0, h = 0; //recuperar del empleado el tipo y las horas trabajadas extras
+        //int type = 0, h = 0; //recuperar del empleado el tipo y las horas trabajadas extras
         switch(type){
             case 0:
                 payments.gerente(h);
@@ -205,6 +212,28 @@ public class Employeesimulator {
                 System.out.println("Error, verificar tipo de empleado");
                 break;
         }
+        System.out.println("Seleccionar tipo de pago");
+        System.out.println("1) Quincenal");
+        System.out.println("2) Mensual");
+        System.out.println("3) Anual");
+        Scanner keyboard = new Scanner(System.in);
+        int selection = keyboard.nextInt();
+        switch(selection){
+            case 1:
+                payments.quincenal();
+                break;
+            case 2:
+                payments.mensual();
+                break;
+            case 3:
+                payments.anual();
+                break;
+            default:
+                System.out.println("seleccionar opción del menú");
+                nomina_empleado(type,h);
+                break;
+        }
+        
     }
 }
 
@@ -228,13 +257,13 @@ class payments{
     static int iva;
     static int total;
         
-    //métodos para tipos de pagos
+    //métodos para tipos de pagos ARREGLAR!!!!
     public static void quincenal(){
         paymentb = paymentb/2;
         imss = imss/2;
         double subtotal = paymentb +hextra -imss;
         double iva = subtotal * 0.16;
-        double total = subtotal -iva;
+        double total = payments.paymentb + subtotal -iva;
         System.out.println("----------PAGO----------");
         System.out.println("Sueldo: $"+paymentb);
         System.out.println("Horas extras pagadas: $"+hextra);
@@ -249,7 +278,7 @@ class payments{
     public static void mensual(){
         double subtotal = paymentb +hextra -imss;
         double iva = subtotal * 0.16;
-        double total = subtotal -iva;
+        double total = payments.paymentb + subtotal -iva;
         System.out.println("----------PAGO----------");
         System.out.println("Sueldo: $"+paymentb);
         System.out.println("Horas extras pagadas: $"+hextra);
@@ -266,7 +295,7 @@ class payments{
         imss = imss*12;
         double subtotal = paymentb +hextra -imss;
         double iva = subtotal * 0.16;
-        double total = subtotal -iva;
+        double total = payments.paymentb + subtotal -iva;
         System.out.println("----------PAGO----------");
         System.out.println("Sueldo: $"+paymentb);
         System.out.println("Horas extras pagadas: $"+hextra);
