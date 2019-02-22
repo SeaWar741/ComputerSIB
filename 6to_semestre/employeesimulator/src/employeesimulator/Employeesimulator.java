@@ -38,7 +38,8 @@ public class Employeesimulator {
         System.out.println("----------Bienvenido----------");
         System.out.println("1)Ver empleados");
         System.out.println("2)Registrar nuevo empleado");
-        System.out.println("3)Cálculo de nómina para empleado");
+        System.out.println("3)Eliminar empleado");
+        System.out.println("4)Cálculo de nómina para empleado");
         System.out.println("4)Salir");
         Scanner keyboard = new Scanner(System.in);
         Scanner keyboard2 = new Scanner(System.in);
@@ -70,7 +71,9 @@ public class Employeesimulator {
                 menu();
                 break;
             case 3:
-                System.out.println("Ingresar nómina");
+                System.out.println("Eliminar empleados");
+            case 4:
+                System.out.println("Ingresar nómina \n");
                 String nomina = keyboard2.next();
                 for(int i = 0; i< list.size(); i++){
                     if(employeelist[i].nomina.equals(nomina)){
@@ -98,9 +101,6 @@ public class Employeesimulator {
         Random rand = new Random();
         int nom = 50000  + rand.nextInt(99999 - 50000  + 1);
         int ss = 50000  + rand.nextInt(99999 - 50000  + 1);
-//        if(gerente <=20 ||  jefe <=2 || limpieza <=2 || seguridad <=3){
-//            
-//        }
         int ty;
         if(continue_creation() == true){
             ty = rand.nextInt(4);
@@ -171,7 +171,7 @@ public class Employeesimulator {
         name = names[n]+" "+apellidos[l];
         return name;
     }
-    //clase verificador de cuantos hay 
+
     //solo pueden haber 1 gerente, 2 jefes, 3 vigilantes, 2 limpieza
     public static boolean continue_creation(){
         //checar en el array de objetos si existe ya la cantidad de
@@ -215,7 +215,7 @@ public class Employeesimulator {
         System.out.println("Seleccionar tipo de pago");
         System.out.println("1) Quincenal");
         System.out.println("2) Mensual");
-        System.out.println("3) Anual");
+        System.out.println("3) Anual\n");
         Scanner keyboard = new Scanner(System.in);
         int selection = keyboard.nextInt();
         switch(selection){
@@ -278,7 +278,7 @@ class payments{
     public static void mensual(){
         double subtotal = paymentb +hextra -imss;
         double iva = subtotal * 0.16;
-        double total = payments.paymentb + subtotal -iva;
+        double total = subtotal -iva;
         System.out.println("----------PAGO----------");
         System.out.println("Sueldo: $"+paymentb);
         System.out.println("Horas extras pagadas: $"+hextra);
@@ -295,7 +295,7 @@ class payments{
         imss = imss*12;
         double subtotal = paymentb +hextra -imss;
         double iva = subtotal * 0.16;
-        double total = payments.paymentb + subtotal -iva;
+        double total = subtotal -iva;
         System.out.println("----------PAGO----------");
         System.out.println("Sueldo: $"+paymentb);
         System.out.println("Horas extras pagadas: $"+hextra);
@@ -313,17 +313,17 @@ class payments{
     public static void gerente(int hours){
         payments.paymentb = 15000;
         payments.hextra = 0*hours;
-        payments.imss = paymentb - (paymentb*0.05);
+        payments.imss = paymentb*0.05;
     }
     public static void jefe(int hours){
         payments.paymentb = 2000;
         payments.hextra = 0*hours;
-        payments.imss = paymentb - (paymentb*0.05);
+        payments.imss = paymentb*0.05;
     }
     public static void empleado(int hours){
         payments.paymentb = 9000;
         payments.hextra = 8*hours;
-        payments.imss = paymentb - (paymentb*0.05);
+        payments.imss = paymentb*0.05;
     }
     public static void empleado_nofixed(int hours){
         payments.paymentb = 0;
@@ -333,11 +333,11 @@ class payments{
     public static void limpieza(int hours){
         payments.paymentb = 5000;
         payments.hextra = 50*hours;
-        payments.imss = paymentb - (paymentb*0.05);
+        payments.imss = paymentb*0.05;
     }
     public static void seguridad(int hours){
         payments.paymentb = 6000;
         payments.hextra = 60;
-        payments.imss = paymentb - (paymentb*0.05);
+        payments.imss = paymentb*0.05;
     }
 }
