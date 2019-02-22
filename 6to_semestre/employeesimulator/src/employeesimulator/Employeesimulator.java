@@ -6,7 +6,6 @@
 package employeesimulator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,15 +31,12 @@ public class Employeesimulator {
         }
         menu();
     }
-    
     public static void menu(){
         String[] titles = {"gerente","jefe","empleado","limpieza","seguridad"};
         System.out.println("----------Bienvenido----------");
         System.out.println("1)Ver empleados");
-        System.out.println("2)Registrar nuevo empleado");
-        System.out.println("3)Eliminar empleado");
-        System.out.println("4)Cálculo de nómina para empleado");
-        System.out.println("4)Salir");
+        System.out.println("2)Cálculo de nómina para empleado");
+        System.out.println("3)Salir");
         Scanner keyboard = new Scanner(System.in);
         Scanner keyboard2 = new Scanner(System.in);
         int selection = keyboard.nextInt();
@@ -66,13 +62,13 @@ public class Employeesimulator {
                 System.out.println("-------------------------------------- \n");
                 menu();
                 break;
+//            case 2:
+//                System.out.println("Registrar empleados");
+//                menu();
+//                break;
+//            case 3:
+//                System.out.println("Eliminar empleados");
             case 2:
-                System.out.println("Registrar empleados");
-                menu();
-                break;
-            case 3:
-                System.out.println("Eliminar empleados");
-            case 4:
                 System.out.println("Ingresar nómina \n");
                 String nomina = keyboard2.next();
                 for(int i = 0; i< list.size(); i++){
@@ -82,6 +78,10 @@ public class Employeesimulator {
                     
                 }
                 menu();
+                break;
+            case 3:
+                System.out.println("Gracias, hasta luego");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Seleccionar otra opción");
@@ -94,7 +94,6 @@ public class Employeesimulator {
                 
         }
     }
-    
     public static void generator(){
         String[] contracts = {"Temporal", "Indefinido","Por obra","Internship"}; 
         
@@ -177,16 +176,6 @@ public class Employeesimulator {
         //checar en el array de objetos si existe ya la cantidad de
         return gerente <1 && jefe <2 && limpieza <2 && seguridad <3; //arreglar
         //System.out.println("Ya no existen posiciones disponibles para este tipo de empleo");
-    }
-    public static void display_employees(){
-        //pasar Arraylists a arrays
-        //Vaciar arraylists
-        //imprimir
-    }
-    public static void delete_employee(int id){
-        //pasar Arraylists a arrays
-        //vaciar arraylists
-        //eliminar del array el que tenga ese id
     }
     public static void nomina_empleado(int type, int h){
         payments payments = new payments();
