@@ -40,8 +40,8 @@ public class Employeesimulator {
         System.out.println("----------Bienvenido----------");
         System.out.println("1)Ver empleados");
         System.out.println("2)Cálculo de nómina para empleado");
-        System.out.println("3)Generar mas empleados");
-        System.out.println("4)Salir");
+        //System.out.println("3)Generar mas empleados");
+        System.out.println("3)Salir");
         Scanner keyboard = new Scanner(System.in); /*Scanner para las opciones del menú*/
         Scanner keyboard2 = new Scanner(System.in); /*Scanner para las opciones del submenu de la nómina*/
         int selection = keyboard.nextInt(); /*Se utiliza el scanner keyboard para capturar la selección del usuario*/
@@ -75,16 +75,18 @@ public class Employeesimulator {
                 }
                 menu();/*se regresa al menú*/
                 break;
-            case 3:
-                generator();/*se inicializa el método generator para la creación de empleados*/
+            /*case 3:
+                generator();//se inicializa el método generator para la creación de empleados
                 System.out.println("Empleado generado! \n");
                 System.out.println("Número por categoria:");
                 System.out.println("Gerente: "+gerente);
                 System.out.println("Jefe: "+jefe);
                 System.out.println("Limpieza: "+limpieza);
                 System.out.println("Seguridad :"+seguridad+"\n");
+                menu();
                 break;
-            case 4:
+                */
+            case 3:
                 System.out.println("Gracias, hasta luego");
                 System.exit(0);/*Se cierra el programa*/
                 break;
